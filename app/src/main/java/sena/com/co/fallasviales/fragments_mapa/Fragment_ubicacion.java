@@ -13,21 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.GoogleMap;
+/*import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.MarkerOptions;*/
 
 import sena.com.co.fallasviales.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
+public class Fragment_ubicacion extends Fragment {
 
-
+/*
     public Fragment_ubicacion() {
         // Required empty public constructor
     }
@@ -69,5 +69,5 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
             }
         });
 
-    }
+    }*/
 }

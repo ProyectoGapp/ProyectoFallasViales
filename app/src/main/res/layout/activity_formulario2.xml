@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sena.com.co.fallasviales.formularios.FormularioActivity">
+    <!--Campo Ubicación-->
+    <TextView
+        android:id="@+id/lbnUbicacion"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ubucacion" />
+
+    <TextView
+        android:id="@+id/txtUbicacion"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content" />
+    <!--Campo Nombre-->
+    <TextView
+        android:id="@+id/lbnNombre"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content"
+        android:text="@string/nombres" />
+    <EditText
+        android:id="@+id/editNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--Campo Apellido -->
+    <TextView
+        android:id="@+id/lbnApellidos"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content"
+        android:text="@string/apellidos" />
+    <EditText
+        android:id="@+id/editApellido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--Campo Email -->
+    <TextView
+        android:id="@+id/lbnEmail"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content"
+        android:text="@string/email" />
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--Campo Tipo de Irregularidad -->
+    <TextView
+        android:id="@+id/lbnNombreTipo"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content"
+        android:text="@string/tipo" />
+    <Spinner
+        android:id="@+id/spnTipo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+    <!--Boton Guardar-->
+    <Button
+        android:id="@+id/btnEnviar"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enviar" />
+</LinearLayout>
