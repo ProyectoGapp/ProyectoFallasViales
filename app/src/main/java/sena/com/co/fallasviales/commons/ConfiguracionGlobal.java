@@ -14,4 +14,5 @@ public class ConfiguracionGlobal {
     public static final String USUARIOS = "Usuarios";
     public static final String SALTO_DE_LINEA = "\n";
 
+
 }
