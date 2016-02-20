@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sena.com.co.fallasviales.fragments_mapa.Fragment_ubicacion">
+
+    <!-- TODO: Update blank fragment layout 
+    <TextView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Hola este seria el nuevo fragment" />-->
+    
+    <fragment
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/idfragment_mapas"
+        android:layout_weight="1">
+    </fragment>
+
+    <Button
+        android:id="@+id/idbtnenviarformulario"
+        android:layout_width="match_parent"
+        android:text="Siguiente"
+        android:layout_weight="6"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
