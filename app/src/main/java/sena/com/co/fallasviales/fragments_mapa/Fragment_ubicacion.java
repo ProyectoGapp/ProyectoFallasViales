@@ -2,6 +2,7 @@ package sena.com.co.fallasviales.fragments_mapa;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -12,7 +13,10 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -21,11 +25,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import sena.com.co.fallasviales.R;
+import sena.com.co.fallasviales.formulario.FormularioActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
+
+
+
+    Button btnenviarformulario;
+    String longitud,latitud;
+
+    FormularioActivity formularioActivity = new FormularioActivity();
+
+
 
 
     public Fragment_ubicacion() {
@@ -40,6 +54,30 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
         View v = inflater.inflate(R.layout.fragment_ubicacion, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.idfragment_mapas);
         mapFragment.getMapAsync(this);
+
+
+        btnenviarformulario = (Button)v.findViewById(R.id.idbtnenviarformulario);
+
+        btnenviarformulario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /*
+                * Se capturan los datos correspondientes (longitud,latitud)
+                * que se envian a la actividad siguiente
+                * */
+                Intent intent = new Intent(getContext(),FormularioActivity.class);
+                Bundle datosmapa = new Bundle();
+
+                datosmapa.putString("longitud",longitud);
+                datosmapa.putString("latitud",latitud);
+
+                intent.putExtras(datosmapa);
+                startActivity(intent);
+
+            }
+        });
+
         return v;
     }
 
@@ -62,9 +100,12 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
         googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-                //googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("marcador gapp"));
-                //googleMap.addMarker(new MarkerOptions().title("ANIMAL").position(new LatLng(location.getLatitude(), location.getLongitude())));
-                googleMap.addMarker(new MarkerOptions().title("Mapas").position(new LatLng(location.getLatitude(),location.getLongitude())));
+
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()),16));
+                googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(location.getLatitude(), location.getLongitude())));
+                longitud = " "+location.getLongitude();
+                latitud = " "+location.getLatitude();
+
 
             }
         });
