@@ -3,6 +3,7 @@ package sena.com.co.fallasviales.formulario;
 import android.view.View;
 import android.widget.Toast;
 
+import com.cloudinary.Cloudinary;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -24,10 +25,11 @@ import sena.com.co.fallasviales.commons.Utilidad;
 public class Auxiliar implements View.OnClickListener {
     static final Logger LOG = Logger.getLogger(Auxiliar.class
             .getSimpleName());
-    private final  FormularioActivity datos_activity;
+    private final FormularioActivity datos_activity;
     private Usuario usuario;
     private String tipo;
     private String msjVacio;
+    private boolean hayTipos;
 
     /**
      * constructor
@@ -50,7 +52,6 @@ public class Auxiliar implements View.OnClickListener {
      */
     private void crearUsuario() {
         LOG.info("[whilfer]**********Crear Usuario*************");
-        seleccionarTipo();
         Usuario usuario = new Usuario();
         usuario.setCordenadas("Indefinido aun");
         usuario.setUbicacion("Popayán");
@@ -71,6 +72,7 @@ public class Auxiliar implements View.OnClickListener {
         boolean c1 = false;
         boolean c2 = false;
         boolean c3 = false;
+        boolean c4 = false;
         final StringBuilder msjVacios = new StringBuilder();
         msjVacios.append(datos_activity.getApplicationContext().getText(R.string.msjCampos));
         if (Utilidad.cadenaVacia(datos_activity.getNombre().getText().toString())) {
@@ -91,14 +93,21 @@ public class Auxiliar implements View.OnClickListener {
             msjVacios.append(ConfiguracionGlobal.SALTO_DE_LINEA);
             msjVacios.append(datos_activity.getApplicationContext().getText(R.string.email));
         }
+        if (!datos_activity.getTipos().getSelectedItem().toString().equals(ConfiguracionGlobal.SELECCION)) {
+            c4 = true;
+        } else {
+            msjVacios.append(ConfiguracionGlobal.SALTO_DE_LINEA);
+            msjVacios.append(datos_activity.getApplicationContext().getText(R.string.tipo));
+        }
 
-        if (c1 && c2 && c3) {
+        if (c1 && c2 && c3 && c4) {
             return true;
         } else {
             msjVacio = msjVacios.toString();
         }
         return false;
     }
+
     /**
      * Metodo Guardar
      */
@@ -106,16 +115,22 @@ public class Auxiliar implements View.OnClickListener {
         LOG.info("[whilfer]**********Guardar*************");
         //inicilizo variable
         setUsuario(new Usuario());
+        //tipo de daño
+        seleccionarTipo();
         if (!validacionVacio()) {
             lanzaMensaje(getMsjVacio());
         } else if (!Utilidad.verificarCorreo(datos_activity.getCorreoElectronico().getText().toString())) {
             lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjErrorEmail)));
         } else {
-            crearUsuario();
-            datos_activity.getFirebase().child(ConfiguracionGlobal.USUARIOS).child(getUsuario().getNombre()).setValue(getUsuario());
-            lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjResExitoso)));
-            LOG.info("[whilfer]********** Usuario guardado*************");
-            limpiar();
+            if (isHayTipos()) {
+                crearUsuario();
+                datos_activity.getFirebase().child(ConfiguracionGlobal.USUARIOS).child(getUsuario().getNombre()).setValue(getUsuario());
+                lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjResExitoso)));
+                limpiar();
+            } else {
+                lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjResNoExitoso)));
+                limpiar();
+            }
         }
     }
 
@@ -130,19 +145,16 @@ public class Auxiliar implements View.OnClickListener {
         datos_activity.getApellidos().invalidate();
         datos_activity.getCorreoElectronico().setText("");
         datos_activity.getCorreoElectronico().invalidate();
+        //valor por defecto sppiner
+        datos_activity.getTipos().setAdapter(datos_activity.getTiposDanos());
     }
 
     /**
      * selecciona tipo daño
      */
     private void seleccionarTipo() {
-
-        if(datos_activity.getTiposDanos()!=null) {
+        if (isHayTipos()) {
             setTipo(datos_activity.getTipos().getSelectedItem().toString());
-            LOG.info("[whilfer]**********dato seleccionado*************" + getTipo());
-        }else{
-            lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjResNoExitoso)));
-
         }
     }
 
@@ -154,19 +166,17 @@ public class Auxiliar implements View.OnClickListener {
         final ValueEventListener valueEventListener = datos_activity.getFirebaseTipos().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                LOG.info("[whilfer]********* valores dataSnapshot **************" + dataSnapshot);
                 final GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {
                 };
                 final List<String> list = dataSnapshot.getValue(t);
-                LOG.info("[whilfer]********* tamaño lista **************" + list.size());
                 if (!list.isEmpty()) {
+                    //verifica si se carga el sppiner con los tipos de la base de datos
+                    setHayTipos(true);
+                    //se recorre lista de items
                     for (String items : list) {
                         datos_activity.getTiposDanos().add(items);
-                        datos_activity.getTipos().setAdapter(datos_activity.getTiposDanos());
                     }
                 }
-
-
             }
 
             @Override
@@ -174,7 +184,21 @@ public class Auxiliar implements View.OnClickListener {
                 // Toast.makeText(activity,getResources().getText(R.string.Error),Toast.LENGTH_SHORT).show();
             }
         });
+        //valor por defecto sppiner
+        datos_activity.getTipos().setAdapter(datos_activity.getTiposDanos());
 
+    }
+
+    /**
+     * Configuracion
+     * Coneccion con cloudinary
+     */
+    public void configuracionClaudinary() {
+        LOG.info("[whilfer]**********Configuración Cloudinary*************");
+        datos_activity.getConfiguracionClaudinary().put(ConfiguracionGlobal.CLOUDINARY_CONNECTION_NAME, ConfiguracionGlobal.CLOUDINARY_NOMBRE);
+        datos_activity.getConfiguracionClaudinary().put(ConfiguracionGlobal.CLOUDINARY_API_KEY, ConfiguracionGlobal.CLOUDINARY_API_KEY_SECRET);
+        datos_activity.getConfiguracionClaudinary().put(ConfiguracionGlobal.CLOUDINARY_API_SECRET_N, ConfiguracionGlobal.CLOUDINARY_API_SECRET);
+        final Cloudinary cloudinary = new Cloudinary(datos_activity.getConfiguracionClaudinary());
     }
 
     /**
@@ -212,5 +236,13 @@ public class Auxiliar implements View.OnClickListener {
 
     public void setMsjVacio(String msjVacio) {
         this.msjVacio = msjVacio;
+    }
+
+    public boolean isHayTipos() {
+        return hayTipos;
+    }
+
+    public void setHayTipos(boolean hayTipos) {
+        this.hayTipos = hayTipos;
     }
 }

@@ -18,5 +18,7 @@
     <string name="msjCampos">Campo/s Obligatorios</string>
     <string name="msjErrorEmail">Formato de correo invalido,Ejm example@gmail.com</string>
     <string name="msjResExitoso">Registro Exitoso</string>
+    <string name="seleccion">Seleccione</string>
     <string name="msjResNoExitoso">Error al guardar registro,inténtalo mas tarde</string>
+    <string name="msjFoto">Toma foto de la irregularidad presentada.</string>
 </resources>

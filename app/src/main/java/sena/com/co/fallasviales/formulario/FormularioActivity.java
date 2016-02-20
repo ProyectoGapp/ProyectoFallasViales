@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 
+import java.util.Map;
+
 import sena.com.co.fallasviales.R;
 import sena.com.co.fallasviales.commons.ConfiguracionGlobal;
 
@@ -22,6 +24,7 @@ public class FormularioActivity extends AppCompatActivity {
     Firebase firebaseTipos;
     private Spinner tipos;
     private ArrayAdapter<CharSequence> tiposDanos;
+    private Map configuracionClaudinary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,9 @@ public class FormularioActivity extends AppCompatActivity {
         //url guardar
         firebase = new Firebase(ConfiguracionGlobal.URL);
         //url buscar tipos
-        firebaseTipos=new Firebase(ConfiguracionGlobal.URL_BUSCAR);
+        firebaseTipos = new Firebase(ConfiguracionGlobal.URL_BUSCAR);
+        //cargando la configuración cloudinary
+        auxiliar.configuracionClaudinary();
         //inicilizar controles
         nombre = (EditText) findViewById(R.id.editNombre);
         apellidos = (EditText) findViewById(R.id.editApellido);
@@ -45,10 +50,22 @@ public class FormularioActivity extends AppCompatActivity {
         //cargar tipos en sppiner
         tiposDanos = new ArrayAdapter<CharSequence>(this, R.layout.support_simple_spinner_dropdown_item);
         tiposDanos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        tiposDanos.add(getApplicationContext().getText(R.string.seleccion));
         auxiliar.cargarTipos();
         //enviar datos
         btnEnviar = (Button) findViewById(R.id.btnEnviar);
         getBtnEnviar().setOnClickListener(auxiliar);
+
+
+    }
+
+    //gettrrs sertters
+    public Spinner getTipos() {
+        return tipos;
+    }
+
+    public void setTipos(Spinner tipos) {
+        this.tipos = tipos;
     }
 
     public EditText getNombre() {
@@ -59,20 +76,20 @@ public class FormularioActivity extends AppCompatActivity {
         this.nombre = nombre;
     }
 
-    public EditText getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(EditText correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
     public EditText getApellidos() {
         return apellidos;
     }
 
     public void setApellidos(EditText apellidos) {
         this.apellidos = apellidos;
+    }
+
+    public EditText getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(EditText correoElectronico) {
+        this.correoElectronico = correoElectronico;
     }
 
     public TextView getUbicacion() {
@@ -115,19 +132,19 @@ public class FormularioActivity extends AppCompatActivity {
         this.firebaseTipos = firebaseTipos;
     }
 
-    public Spinner getTipos() {
-        return tipos;
-    }
-
-    public void setTipos(Spinner tipos) {
-        this.tipos = tipos;
-    }
-
     public ArrayAdapter<CharSequence> getTiposDanos() {
         return tiposDanos;
     }
 
     public void setTiposDanos(ArrayAdapter<CharSequence> tiposDanos) {
         this.tiposDanos = tiposDanos;
+    }
+
+    public Map getConfiguracionClaudinary() {
+        return configuracionClaudinary;
+    }
+
+    public void setConfiguracionClaudinary(Map configuracionClaudinary) {
+        this.configuracionClaudinary = configuracionClaudinary;
     }
 }
