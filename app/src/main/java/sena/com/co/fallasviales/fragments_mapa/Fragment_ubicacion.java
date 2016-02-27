@@ -102,10 +102,11 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
             public void onMyLocationChange(Location location) {
 
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()),16));
+                googleMap.clear();
                 googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(location.getLatitude(), location.getLongitude())));
+
                 longitud = " "+location.getLongitude();
                 latitud = " "+location.getLatitude();
-
 
             }
         });

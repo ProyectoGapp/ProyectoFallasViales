@@ -157,6 +157,8 @@ public class Auxiliar implements View.OnClickListener {
                 LOG.info("[whilfer]********* valores dataSnapshot **************" + dataSnapshot);
                 final GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {
                 };
+
+
                 final List<String> list = dataSnapshot.getValue(t);
                 LOG.info("[whilfer]********* tamaño lista **************" + list.size());
                 if (!list.isEmpty()) {
