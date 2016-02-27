@@ -181,6 +181,8 @@ public class Auxiliar implements View.OnClickListener {
                 LOG.info("[whilfer]**********dataSnapshot*************" + dataSnapshot);
                 final GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {
                 };
+
+
                 final List<String> list = dataSnapshot.getValue(t);
                 if (!list.isEmpty()) {
                     //verifica si se carga el sppiner con los tipos de la base de datos

@@ -61,7 +61,7 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
 
                 /*
                 * Se capturan los datos correspondientes (longitud,latitud)
-                * que se envian a la actividad siguiente
+                * que se envian a la actividad siguiente.
                 * */
                 Intent intent = new Intent(getContext(), FormularioActivity.class);
                 Bundle datosmapa = new Bundle();
@@ -98,8 +98,16 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
             @Override
             public void onMyLocationChange(Location location) {
 
+
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
                 googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(location.getLatitude(), location.getLongitude())));
+                longitud = " " + location.getLongitude();
+                latitud = " " + location.getLatitude();
+
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
+                googleMap.clear();
+                googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(location.getLatitude(), location.getLongitude())));
+
                 longitud = " " + location.getLongitude();
                 latitud = " " + location.getLatitude();
 
