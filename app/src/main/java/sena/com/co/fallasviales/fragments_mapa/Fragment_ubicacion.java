@@ -33,13 +33,10 @@ import sena.com.co.fallasviales.formulario.FormularioActivity;
 public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
 
 
-
     Button btnenviarformulario;
-    String longitud,latitud;
+    String longitud, latitud;
 
     FormularioActivity formularioActivity = new FormularioActivity();
-
-
 
 
     public Fragment_ubicacion() {
@@ -56,7 +53,7 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
 
-        btnenviarformulario = (Button)v.findViewById(R.id.idbtnenviarformulario);
+        btnenviarformulario = (Button) v.findViewById(R.id.idbtnenviarformulario);
 
         btnenviarformulario.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,11 +63,11 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
                 * Se capturan los datos correspondientes (longitud,latitud)
                 * que se envian a la actividad siguiente
                 * */
-                Intent intent = new Intent(getContext(),FormularioActivity.class);
+                Intent intent = new Intent(getContext(), FormularioActivity.class);
                 Bundle datosmapa = new Bundle();
 
-                datosmapa.putString("longitud",longitud);
-                datosmapa.putString("latitud",latitud);
+                datosmapa.putString("longitud", longitud);
+                datosmapa.putString("latitud", latitud);
 
                 intent.putExtras(datosmapa);
                 startActivity(intent);
@@ -85,7 +82,7 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
     public void onMapReady(final GoogleMap googleMap) {
         //googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("marcador gapp"));
 
-        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this.getContext(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
             // here to request the missing permissions, and then overriding
@@ -101,10 +98,10 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
             @Override
             public void onMyLocationChange(Location location) {
 
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()),16));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
                 googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(location.getLatitude(), location.getLongitude())));
-                longitud = " "+location.getLongitude();
-                latitud = " "+location.getLatitude();
+                longitud = " " + location.getLongitude();
+                latitud = " " + location.getLatitude();
 
 
             }

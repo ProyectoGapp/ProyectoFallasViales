@@ -1,30 +1,65 @@
 package sena.com.co.fallasviales.formulario;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Select;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+
 
 import sena.com.co.fallasviales.R;
 import sena.com.co.fallasviales.commons.ConfiguracionGlobal;
+import sena.com.co.fallasviales.commons.DialogoAlerta;
+import sena.com.co.fallasviales.commons.Utilidad;
 
-public class FormularioActivity extends AppCompatActivity {
-    private EditText nombre, apellidos, correoElectronico;
-    private TextView ubicacion;
-    private Button btnEnviar;
+public class FormularioActivity extends AppCompatActivity implements Validator.ValidationListener {
+    static final Logger LOG = Logger.getLogger(FormularioActivity.class
+            .getSimpleName());
+
     private Auxiliar auxiliar;
+    @NotEmpty(messageResId = R.string.msjSeleccionarTexto)
+    private EditText nombre, apellidos;
+    @Email(messageResId = R.string.msjErrorEmail)
+    private EditText correoElectronico;
+    private TextView ubicacion;
+    private Button btnEnviar, btnTomarFoto;
     Firebase firebase;
     Firebase firebaseTipos;
+    @Select(messageResId = R.string.msjTipo)
     private Spinner tipos;
     private ArrayAdapter<CharSequence> tiposDanos;
-    private Map configuracionClaudinary;
+    private Bitmap bitmap;
+    private Validator validator;
+    private boolean validar;
+    Map<View, TextView> spinnerSelections;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +81,79 @@ public class FormularioActivity extends AppCompatActivity {
         correoElectronico = (EditText) findViewById(R.id.editEmail);
         ubicacion = (TextView) findViewById(R.id.txtUbicacion);
         tipos = (Spinner) findViewById(R.id.spnTipo);
-        btnEnviar = (Button) findViewById(R.id.btnEnviar);
         //cargar tipos en sppiner
         tiposDanos = new ArrayAdapter<CharSequence>(this, R.layout.support_simple_spinner_dropdown_item);
         tiposDanos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tiposDanos.add(getApplicationContext().getText(R.string.seleccion));
+        LOG.info("[whilfer]**********formulario activity*************");
         auxiliar.cargarTipos();
         //enviar datos
         btnEnviar = (Button) findViewById(R.id.btnEnviar);
+        btnTomarFoto = (Button) findViewById(R.id.btnTomarFoto);
+        //listener botones
         getBtnEnviar().setOnClickListener(auxiliar);
+        getBtnTomarFoto().setOnClickListener(auxiliar);
+        validator = new Validator(this);
+        validator.setValidationListener(this);
+        spinnerSelections = new HashMap<View, TextView>();
+        tipos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerSelections.put(parent, (TextView) view);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+    }
+
+    /**
+     * resultado de la foto capturada
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Utilidad.validaNulos(data.getExtras())) {
+            bitmap = (Bitmap) data.getExtras().get(ConfiguracionGlobal.DATA);
+            if (Utilidad.validaNulos(bitmap)) {
+                //subir foto al cloudinary
+                getAuxiliar().subirFoto();
+            }
+        }
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        boolean bandera = false;
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+                bandera = true;
+                setValidar(true);
+            } else if (view instanceof Spinner && !bandera) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                DialogoAlerta dialogo = new DialogoAlerta();
+                spinnerSelections.get(view).setError(message);
+                dialogo.show(fragmentManager, "tagAlerta");
+                setValidar(true);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     //gettrrs sertters
@@ -140,11 +237,35 @@ public class FormularioActivity extends AppCompatActivity {
         this.tiposDanos = tiposDanos;
     }
 
-    public Map getConfiguracionClaudinary() {
-        return configuracionClaudinary;
+    public Button getBtnTomarFoto() {
+        return btnTomarFoto;
     }
 
-    public void setConfiguracionClaudinary(Map configuracionClaudinary) {
-        this.configuracionClaudinary = configuracionClaudinary;
+    public void setBtnTomarFoto(Button btnTomarFoto) {
+        this.btnTomarFoto = btnTomarFoto;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
+    public Validator getValidator() {
+        return validator;
+    }
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
+
+    public boolean isValidar() {
+        return validar;
+    }
+
+    public void setValidar(boolean validar) {
+        this.validar = validar;
     }
 }

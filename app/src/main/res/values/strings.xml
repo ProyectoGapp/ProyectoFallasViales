@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name">Fallas viales</string>
+    <string name="app_name">Formulario de Registro</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- String para formulario activity-->
-    <string name="ubucacion">Ubicación</string>
+    <string name="ubicacion">Ubicación</string>
     <string name="nombres">Nombres</string>
     <string name="apellidos">Apellidos</string>
     <string name="tipo">Tipo de Irregularidad</string>
@@ -20,5 +20,10 @@
     <string name="msjResExitoso">Registro Exitoso</string>
     <string name="seleccion">Seleccione</string>
     <string name="msjResNoExitoso">Error al guardar registro,inténtalo mas tarde</string>
-    <string name="msjFoto">Toma foto de la irregularidad presentada.</string>
+    <string name="msjFoto">Debe tomar una foto para completar el registro.</string>
+    <string name="tomarFoto">Tomar Foto</string>
+    <string name="campoObligatorio">Campo Obligatorio.</string>
+    <string name="msjSeleccionarTexto">Debe Ingresar un texto.</string>
+    <string name="msjTipo">Debe seleccionar un tipo de Irregularidad.</string>
+
 </resources>

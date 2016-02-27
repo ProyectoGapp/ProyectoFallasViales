@@ -1,5 +1,9 @@
 package sena.com.co.fallasviales.formulario;
 
+import android.content.Intent;
+import android.provider.MediaStore;
+import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -11,12 +15,23 @@ import com.firebase.client.GenericTypeIndicator;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
+import javax.xml.validation.Validator;
+
+import sena.com.co.fallasviales.Entidades.TareAsincrona;
 import sena.com.co.fallasviales.Entidades.Usuario;
 import sena.com.co.fallasviales.R;
 import sena.com.co.fallasviales.commons.ConfiguracionGlobal;
+import sena.com.co.fallasviales.commons.DialogAlertaFoto;
+import sena.com.co.fallasviales.commons.DialogoAlerta;
 import sena.com.co.fallasviales.commons.Utilidad;
 
 /**
@@ -30,6 +45,10 @@ public class Auxiliar implements View.OnClickListener {
     private String tipo;
     private String msjVacio;
     private boolean hayTipos;
+    private boolean subirFoto;
+    private Cloudinary cloudinary;
+    private TareAsincrona tareAsincrona;
+
 
     /**
      * constructor
@@ -42,7 +61,25 @@ public class Auxiliar implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        guardar();
+        int seleccion = view.getId();
+        try {
+            switch (seleccion) {
+                case (R.id.btnEnviar):
+                    datos_activity.setValidar(false);
+                    datos_activity.getValidator().validate();
+                    if (!datos_activity.isValidar()) {
+                        guardar();
+                    }
+                    break;
+                case (R.id.btnTomarFoto):
+                    LOG.info("[whilfer]**********Tomar foto*************");
+                    tomarFoto();
+                    break;
+            }
+        } catch (Exception e) {
+            LOG.info("[whilfer]>>>>>>>>>>>>Error al seleccionar " + e.getLocalizedMessage());
+        }
+
     }
 
     /**
@@ -56,7 +93,7 @@ public class Auxiliar implements View.OnClickListener {
         usuario.setCordenadas("Indefinido aun");
         usuario.setUbicacion("Popayán");
         usuario.setTipo(getTipo());
-        usuario.setUrlFoto("Por definir");
+        usuario.setUrlFoto(tareAsincrona.getUrl());
         usuario.setNombre(datos_activity.getNombre().getText().toString());
         usuario.setApellidos(datos_activity.getApellidos().getText().toString());
         usuario.setCorreoElectronico(datos_activity.getCorreoElectronico().getText().toString());
@@ -64,75 +101,49 @@ public class Auxiliar implements View.OnClickListener {
     }
 
     /**
-     * valida campos del formulario no esten vacios
-     *
-     * @return
+     * metodo tomar foto
      */
-    private boolean validacionVacio() {
-        boolean c1 = false;
-        boolean c2 = false;
-        boolean c3 = false;
-        boolean c4 = false;
-        final StringBuilder msjVacios = new StringBuilder();
-        msjVacios.append(datos_activity.getApplicationContext().getText(R.string.msjCampos));
-        if (Utilidad.cadenaVacia(datos_activity.getNombre().getText().toString())) {
-            c1 = true;
-        } else {
-            msjVacios.append(ConfiguracionGlobal.SALTO_DE_LINEA);
-            msjVacios.append(datos_activity.getApplicationContext().getText(R.string.nombres));
-        }
-        if (Utilidad.cadenaVacia(datos_activity.getApellidos().getText().toString())) {
-            c2 = true;
-        } else {
-            msjVacios.append(ConfiguracionGlobal.SALTO_DE_LINEA);
-            msjVacios.append(datos_activity.getApplicationContext().getText(R.string.apellidos));
-        }
-        if (Utilidad.cadenaVacia(datos_activity.getCorreoElectronico().getText().toString())) {
-            c3 = true;
-        } else {
-            msjVacios.append(ConfiguracionGlobal.SALTO_DE_LINEA);
-            msjVacios.append(datos_activity.getApplicationContext().getText(R.string.email));
-        }
-        if (!datos_activity.getTipos().getSelectedItem().toString().equals(ConfiguracionGlobal.SELECCION)) {
-            c4 = true;
-        } else {
-            msjVacios.append(ConfiguracionGlobal.SALTO_DE_LINEA);
-            msjVacios.append(datos_activity.getApplicationContext().getText(R.string.tipo));
-        }
-
-        if (c1 && c2 && c3 && c4) {
-            return true;
-        } else {
-            msjVacio = msjVacios.toString();
-        }
-        return false;
+    private void tomarFoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        datos_activity.startActivityForResult(intent, 1, null);
     }
+
+
+    /**
+     * subirFoto
+     */
+    public void subirFoto() {
+        tareAsincrona = new TareAsincrona();
+        tareAsincrona.execute(datos_activity.getBitmap(), getCloudinary());
+        setSubirFoto(true);
+    }
+
 
     /**
      * Metodo Guardar
      */
     private void guardar() {
-        LOG.info("[whilfer]**********Guardar*************");
         //inicilizo variable
         setUsuario(new Usuario());
         //tipo de daño
         seleccionarTipo();
-        if (!validacionVacio()) {
-            lanzaMensaje(getMsjVacio());
-        } else if (!Utilidad.verificarCorreo(datos_activity.getCorreoElectronico().getText().toString())) {
-            lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjErrorEmail)));
-        } else {
+        if (isSubirFoto()) {
             if (isHayTipos()) {
                 crearUsuario();
-                datos_activity.getFirebase().child(ConfiguracionGlobal.USUARIOS).child(getUsuario().getNombre()).setValue(getUsuario());
+                datos_activity.getFirebase().child(ConfiguracionGlobal.USUARIOS).child(Utilidad.idUsuario(ConfiguracionGlobal.USER).toString()).setValue(getUsuario());
                 lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjResExitoso)));
                 limpiar();
-            } else {
-                lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjResNoExitoso)));
-                limpiar();
             }
+
+        } else {
+            FragmentManager fragmentManager = datos_activity.getSupportFragmentManager();
+            DialogAlertaFoto dialogAlertaFoto = new DialogAlertaFoto();
+            dialogAlertaFoto.show(fragmentManager, "tagAlerta");
+           /* lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjResNoExitoso)));
+            limpiar();*/
         }
     }
+
 
     /**
      * limpiar
@@ -147,6 +158,7 @@ public class Auxiliar implements View.OnClickListener {
         datos_activity.getCorreoElectronico().invalidate();
         //valor por defecto sppiner
         datos_activity.getTipos().setAdapter(datos_activity.getTiposDanos());
+        setSubirFoto(false);
     }
 
     /**
@@ -166,6 +178,7 @@ public class Auxiliar implements View.OnClickListener {
         final ValueEventListener valueEventListener = datos_activity.getFirebaseTipos().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                LOG.info("[whilfer]**********dataSnapshot*************" + dataSnapshot);
                 final GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {
                 };
                 final List<String> list = dataSnapshot.getValue(t);
@@ -174,7 +187,9 @@ public class Auxiliar implements View.OnClickListener {
                     setHayTipos(true);
                     //se recorre lista de items
                     for (String items : list) {
+                        LOG.info("[whilfer]**********c::::*************" + items);
                         datos_activity.getTiposDanos().add(items);
+                        datos_activity.getTipos().setAdapter(datos_activity.getTiposDanos());
                     }
                 }
             }
@@ -194,11 +209,11 @@ public class Auxiliar implements View.OnClickListener {
      * Coneccion con cloudinary
      */
     public void configuracionClaudinary() {
-        LOG.info("[whilfer]**********Configuración Cloudinary*************");
-        datos_activity.getConfiguracionClaudinary().put(ConfiguracionGlobal.CLOUDINARY_CONNECTION_NAME, ConfiguracionGlobal.CLOUDINARY_NOMBRE);
-        datos_activity.getConfiguracionClaudinary().put(ConfiguracionGlobal.CLOUDINARY_API_KEY, ConfiguracionGlobal.CLOUDINARY_API_KEY_SECRET);
-        datos_activity.getConfiguracionClaudinary().put(ConfiguracionGlobal.CLOUDINARY_API_SECRET_N, ConfiguracionGlobal.CLOUDINARY_API_SECRET);
-        final Cloudinary cloudinary = new Cloudinary(datos_activity.getConfiguracionClaudinary());
+        Map config = new HashMap();
+        config.put(ConfiguracionGlobal.CLOUDINARY_CONNECTION_NAME, ConfiguracionGlobal.CLOUDINARY_NOMBRE);
+        config.put(ConfiguracionGlobal.CLOUDINARY_API_KEY, ConfiguracionGlobal.CLOUDINARY_API_KEY_SECRET);
+        config.put(ConfiguracionGlobal.CLOUDINARY_API_SECRET_N, ConfiguracionGlobal.CLOUDINARY_API_SECRET);
+        cloudinary = new Cloudinary(config);
     }
 
     /**
@@ -244,5 +259,21 @@ public class Auxiliar implements View.OnClickListener {
 
     public void setHayTipos(boolean hayTipos) {
         this.hayTipos = hayTipos;
+    }
+
+    public Cloudinary getCloudinary() {
+        return cloudinary;
+    }
+
+    public void setCloudinary(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
+    }
+
+    public boolean isSubirFoto() {
+        return subirFoto;
+    }
+
+    public void setSubirFoto(boolean subirFoto) {
+        this.subirFoto = subirFoto;
     }
 }

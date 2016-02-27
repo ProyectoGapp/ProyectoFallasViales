@@ -1,5 +1,7 @@
 package sena.com.co.fallasviales.commons;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,6 +50,24 @@ public class Utilidad {
             return true;
         }
         return false;
+    }
+    /**
+     * id usuario
+     * @return
+     */
+    public static StringBuilder idUsuario(String tipo) {
+        StringBuilder fechaActual = new StringBuilder();
+        int año, mes, dia, hora, minuto, segundo;
+        Calendar fecha = new GregorianCalendar();
+        fechaActual.append(tipo);
+        fechaActual.append(año = fecha.get(Calendar.YEAR));
+        fechaActual.append(mes = fecha.get(Calendar.MONTH));
+        fechaActual.append(dia = fecha.get(Calendar.DAY_OF_MONTH));
+        fechaActual.append(hora = fecha.get(Calendar.HOUR_OF_DAY));
+        fechaActual.append(minuto = fecha.get(Calendar.MINUTE));
+        fechaActual.append(segundo = fecha.get(Calendar.SECOND));
+        return fechaActual;
+
     }
 
     /**
