@@ -64,7 +64,7 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
 
                 /*
                 * Se capturan los datos correspondientes (longitud,latitud)
-                * que se envian a la actividad siguiente
+                * que se envian a la actividad siguiente.
                 * */
                 Intent intent = new Intent(getContext(),FormularioActivity.class);
                 Bundle datosmapa = new Bundle();
