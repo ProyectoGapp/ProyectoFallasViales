@@ -32,9 +32,16 @@ dependencies {
     compile 'com.mobsandgeeks:android-saripaar:2.0.3'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+<<<<<<< HEAD
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.github.satyan:sugar:1.4'
 
 
 
+=======
+    compile 'com.android.support:palette-v7:23.1.1'
+    compile 'com.android.support:cardview-v7:23.0.+'
+    compile 'com.github.satyan:sugar:1.4'
+
+>>>>>>> e3fb2e2db76efc7fd0dd0752297332e5f043cfc0
 }

@@ -15,8 +15,9 @@ public class ConfiguracionGlobal {
     public static final String PATTERN = "^[a-zA-Z0-9_-]{2,}(\\.[a-zA-Z0-9_-]{2,})?@[a-zA-Z0-9_-]{2,}\\.[a-zA-Z]{2,4}(\\.[a-zA-Z]{2,4})?$";
     public static final String URL = "https://intense-inferno-2724.firebaseio.com/";
     public static final String URL_BUSCAR = "https://intense-inferno-2724.firebaseio.com/Irregularidad/tipos";
+    public static final String URL_BUSCAR_USUARIOS = "https://intense-inferno-2724.firebaseio.com/Usuarios";
     public static final String USUARIOS = "Usuarios";
-    public static final String SALTO_DE_LINEA = "\n";
+    public static final String SALTO_DE_LINEA = "/";
     public static final String SELECCION = "Seleccione";
     //cLOUDINARY
     public static final String CLOUDINARY_NOMBRE = "senawhilfer";

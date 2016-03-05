@@ -1,10 +1,16 @@
 package sena.com.co.fallasviales.commons;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import sena.com.co.fallasviales.Entidades.TareaSincronaSplas;
+import sena.com.co.fallasviales.Entidades.Usuario;
 
 /**
  * Created by Wilmer Fernandez on 15/02/2016.
@@ -12,6 +18,7 @@ import java.util.regex.Pattern;
 public class Utilidad {
     static final Logger LOG = Logger.getLogger(Utilidad.class
             .getSimpleName());
+     public static final List<Usuario>usuarios=new ArrayList<>();
 
     /**
      * Metodo generic para validar objetos nulos     *
@@ -27,6 +34,8 @@ public class Utilidad {
         return true;
     }
 
+
+
     public static boolean cadenaVacia(String cadena) {
         boolean cadenaVacia = true;
         if (cadena == null || cadena.trim().isEmpty()) {
@@ -34,7 +43,14 @@ public class Utilidad {
         }
         return cadenaVacia;
     }
-
+    public static  StringBuilder url(String id){
+        StringBuilder url = new StringBuilder();
+        url.append(ConfiguracionGlobal.URL_BUSCAR_USUARIOS);
+        url.append(ConfiguracionGlobal.SALTO_DE_LINEA);
+        url.append(id);
+        url.append(ConfiguracionGlobal.SALTO_DE_LINEA);
+        return url;
+    }
     /**
      * Metodo para validar el campo correo
      *
@@ -42,7 +58,7 @@ public class Utilidad {
      * @return
      */
     public static boolean verificarCorreo(String correo) {
-        LOG.info("[whilfer]***********Correo **********"+correo);
+        LOG.info("[whilfer]***********Correo **********" + correo);
         final Pattern pat = Pattern
                 .compile(ConfiguracionGlobal.PATTERN);
         final Matcher mat = pat.matcher(correo);
@@ -51,8 +67,10 @@ public class Utilidad {
         }
         return false;
     }
+
     /**
      * id usuario
+     *
      * @return
      */
     public static StringBuilder idUsuario(String tipo) {
@@ -83,5 +101,15 @@ public class Utilidad {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+
+
+    public static Logger getLOG() {
+        return LOG;
+    }
+
+    public static List<Usuario> getUsuarios() {
+        return usuarios;
     }
 }

@@ -1,9 +1,11 @@
 package sena.com.co.fallasviales.Entidades;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by Wilmer Fernandez on 15/02/2016.
  */
-public class Usuario extends Irregularidad{
+public class Usuario extends Irregularidad {
     private String nombre;
     private String apellidos;
     private String correoElectronico;
@@ -31,4 +33,18 @@ public class Usuario extends Irregularidad{
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
     }
+
+    /*@Override
+    public boolean equals(Object o) {
+        if (o instanceof Usuario) {
+            Usuario usuario = (Usuario) o;
+            if (super.equals(o) && this.getIdentificador().equals(usuario.getIdentificador()))
+                return true;
+            else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }*/
 }

@@ -25,11 +25,47 @@
             android:name="com.google.android.geo.API_KEY"
             android:value=" AIzaSyCFQvqX6Yj4Hxt9Ez4TtPRciGCMJXuYRks" />
 
+        <meta-data
+            android:name="DATABASE"
+            android:value="bd_sugar_fallas.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="4" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="sena.com.co.fallasviales.Entidades" />
+
+
         <activity
             android:name=".PrincipalActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
 
+<<<<<<< HEAD
+=======
+            <!--
+              <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
+
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>
+            -->
+        </activity>
+        <activity android:name=".formulario.FormularioActivity" >
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity android:name=".formulario.Splass_Activity" >
+>>>>>>> e3fb2e2db76efc7fd0dd0752297332e5f043cfc0
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
