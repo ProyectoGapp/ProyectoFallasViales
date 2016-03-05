@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import sena.com.co.fallasviales.fragments_mapa.Fragment_ubicacion;
+import sena.com.co.fallasviales.listas.Fragment_listado;
 
 
 public class PrincipalActivity extends AppCompatActivity
@@ -23,6 +24,7 @@ public class PrincipalActivity extends AppCompatActivity
 
     FragmentManager manager;
     Fragment_ubicacion fragment_ubicacion = new Fragment_ubicacion();
+    Fragment_listado fragment_listado = new Fragment_listado();
 
 
 
@@ -96,9 +98,13 @@ public class PrincipalActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.id_mapas) {
-            manager.beginTransaction().add(R.id.framelayout_contenedor,fragment_ubicacion).commit();
+           // manager.beginTransaction().add(R.id.framelayout_contenedor, fragment_ubicacion).commit();
+            manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_ubicacion).commit();
+
             // Handle the camera action
         } else if (id == R.id.id_opciones) {
+
+            manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_listado).commit();
 
         }
 

@@ -29,6 +29,7 @@ public class AuxiliarSugar {
     private Splass_Activity splass_activity;
     private List<Usuario> usuariosFirebase;
     private List<Usuario> usuariosSqlLite;
+    public static List<Usuario> usuariosSqlLite_recycler;
     private static List<Usuario> usuariosNuevos = new ArrayList<>();
 
     private boolean bandera;
@@ -87,6 +88,9 @@ public class AuxiliarSugar {
         LOG.info("[whilfer]********** ObtenerUsuariosLocales *************");
         setUsuariosSqlLite(new ArrayList<Usuario>());
         List<Usuario> usuarios = Usuario.listAll(Usuario.class);
+        usuariosSqlLite_recycler = Usuario.listAll(Usuario.class);
+
+
         if (!usuarios.isEmpty()) {
             for (Usuario usuario : usuarios) {
                 getUsuariosSqlLite().add(usuario);
@@ -96,8 +100,9 @@ public class AuxiliarSugar {
             LOG.info("[whilfer]***Lista vacia*****");
         }
 
-
     }
+
+
 
     public void borrar() {
         Usuario.deleteAll(Usuario.class);

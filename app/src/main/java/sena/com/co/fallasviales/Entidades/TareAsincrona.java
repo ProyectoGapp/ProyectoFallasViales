@@ -2,7 +2,7 @@ package sena.com.co.fallasviales.Entidades;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.v7.graphics.Palette;
+
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
