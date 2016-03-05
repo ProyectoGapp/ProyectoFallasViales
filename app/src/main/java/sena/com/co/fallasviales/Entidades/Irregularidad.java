@@ -1,13 +1,16 @@
 package sena.com.co.fallasviales.Entidades;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by Wilmer Fernandez on 15/02/2016.
  */
-public class Irregularidad {
+public class Irregularidad extends SugarRecord {
     private String cordenadas;
     private String ubicacion;
     private String tipo;
     private String urlFoto;
+    private String identificador;
 
     public String getUrlFoto() {
         return urlFoto;
@@ -40,4 +43,15 @@ public class Irregularidad {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
+    }
+
+
 }

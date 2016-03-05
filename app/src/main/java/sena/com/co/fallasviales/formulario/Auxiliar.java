@@ -27,8 +27,10 @@ import java.util.logging.Logger;
 import javax.xml.validation.Validator;
 
 import sena.com.co.fallasviales.Entidades.TareAsincrona;
+import sena.com.co.fallasviales.Entidades.TareaSincronaSplas;
 import sena.com.co.fallasviales.Entidades.Usuario;
 import sena.com.co.fallasviales.R;
+import sena.com.co.fallasviales.commons.AuxiliarSugar;
 import sena.com.co.fallasviales.commons.ConfiguracionGlobal;
 import sena.com.co.fallasviales.commons.DialogAlertaFoto;
 import sena.com.co.fallasviales.commons.DialogoAlerta;
@@ -48,6 +50,7 @@ public class Auxiliar implements View.OnClickListener {
     private boolean subirFoto;
     private Cloudinary cloudinary;
     private TareAsincrona tareAsincrona;
+    private List<Usuario> usuarios;
 
 
     /**
@@ -58,6 +61,8 @@ public class Auxiliar implements View.OnClickListener {
     public Auxiliar(FormularioActivity datos_activity) {
         this.datos_activity = datos_activity;
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -87,12 +92,13 @@ public class Auxiliar implements View.OnClickListener {
      *
      * @return
      */
-    private void crearUsuario() {
+    private void crearUsuario(String id) {
         LOG.info("[whilfer]**********Crear Usuario*************");
         Usuario usuario = new Usuario();
-        usuario.setCordenadas("Indefinido aun");
+       usuario.setCordenadas("Indefinido aun");
         usuario.setUbicacion("Popayán");
         usuario.setTipo(getTipo());
+        usuario.setIdentificador(id);
         usuario.setUrlFoto(tareAsincrona.getUrl());
         usuario.setNombre(datos_activity.getNombre().getText().toString());
         usuario.setApellidos(datos_activity.getApellidos().getText().toString());
@@ -129,10 +135,13 @@ public class Auxiliar implements View.OnClickListener {
         seleccionarTipo();
         if (isSubirFoto()) {
             if (isHayTipos()) {
-                crearUsuario();
-                datos_activity.getFirebase().child(ConfiguracionGlobal.USUARIOS).child(Utilidad.idUsuario(ConfiguracionGlobal.USER).toString()).setValue(getUsuario());
+                String id = Utilidad.idUsuario(ConfiguracionGlobal.USER).toString();
+                crearUsuario(id);
+                datos_activity.getFirebase().child(ConfiguracionGlobal.USUARIOS).child(id).setValue(getUsuario());
                 lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjResExitoso)));
                 limpiar();
+
+                //actualizarLista(id);
             }
 
         } else {
@@ -170,6 +179,36 @@ public class Auxiliar implements View.OnClickListener {
         }
     }
 
+    private void actualizarLista(final String id) {
+        Firebase.setAndroidContext(datos_activity);
+        final Firebase firebase = new Firebase(Utilidad.url(id).toString());
+        LOG.info("[lista Actualizada]************" + Utilidad.url(id).toString());
+        firebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                    LOG.info("[lista Actualizada]**********" + usuario.getNombre());
+                    Utilidad.getUsuarios().add(usuario);
+                    LOG.info("[lista Actualizada]**********" + Utilidad.getUsuarios().size());
+                    for (Usuario usuario1 : Utilidad.getUsuarios()) {
+                        LOG.info("[Usuer**********++" + usuario1.getNombre());
+                    }
+                }catch (Exception e){
+                    LOG.info("Usuario nulo"+e.getLocalizedMessage());
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+    }
+
     /**
      * cargar tipos de daños
      */
@@ -181,18 +220,18 @@ public class Auxiliar implements View.OnClickListener {
                 LOG.info("[whilfer]**********dataSnapshot*************" + dataSnapshot);
                 final GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {
                 };
-
-
                 final List<String> list = dataSnapshot.getValue(t);
                 if (!list.isEmpty()) {
                     //verifica si se carga el sppiner con los tipos de la base de datos
                     setHayTipos(true);
+
                     //se recorre lista de items
                     for (String items : list) {
                         LOG.info("[whilfer]**********c::::*************" + items);
                         datos_activity.getTiposDanos().add(items);
                         datos_activity.getTipos().setAdapter(datos_activity.getTiposDanos());
                     }
+
                 }
             }
 
@@ -277,5 +316,13 @@ public class Auxiliar implements View.OnClickListener {
 
     public void setSubirFoto(boolean subirFoto) {
         this.subirFoto = subirFoto;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 }
