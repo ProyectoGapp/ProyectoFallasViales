@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +54,8 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
     @Email(messageResId = R.string.msjErrorEmail)
     private EditText correoElectronico;
     private TextView ubicacion;
-    private Button btnEnviar, btnTomarFoto;
+    private Button btnEnviar;
+    private ImageButton btnTomarFoto;
     Firebase firebase;
     Firebase firebaseTipos;
     @Select(messageResId = R.string.msjTipo)
@@ -95,7 +98,7 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
         auxiliar.cargarTipos();
         //enviar datos
         btnEnviar = (Button) findViewById(R.id.btnEnviar);
-        btnTomarFoto = (Button) findViewById(R.id.btnTomarFoto);
+        btnTomarFoto = (ImageButton) findViewById(R.id.btnTomarFoto);
         //listener botones
         getBtnEnviar().setOnClickListener(auxiliar);
         getBtnTomarFoto().setOnClickListener(auxiliar);
@@ -247,11 +250,11 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
         this.tiposDanos = tiposDanos;
     }
 
-    public Button getBtnTomarFoto() {
+    public ImageButton getBtnTomarFoto() {
         return btnTomarFoto;
     }
 
-    public void setBtnTomarFoto(Button btnTomarFoto) {
+    public void setBtnTomarFoto(ImageButton btnTomarFoto) {
         this.btnTomarFoto = btnTomarFoto;
     }
 

@@ -1,99 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="sena.com.co.fallasviales.formulario.FormularioActivity">
 
-    <LinearLayout android:orientation="vertical"
+    tools:context="sena.com.co.fallasviales.formulario.FormularioActivity"
+    android:weightSum="1">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        android:layout_height="290dp">
         <!--Campo Ubicación-->
         <TextView
             android:id="@+id/lbnUbicacion"
-            style="@style/EstiloTexVi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/ubicacion" />
 
         <TextView
             android:id="@+id/txtUbicacion"
-            style="@style/EstiloTexVi" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp" />
         <!--Campo Nombre-->
         <TextView
             android:id="@+id/lbnNombre"
-            style="@style/EstiloTexVi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/nombres" />
 
-        <android.support.v7.widget.CardView
+        <EditText
+            android:id="@+id/editNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="2dp">
-
-            <EditText
-                android:id="@+id/editNombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </android.support.v7.widget.CardView>
-
+            style="@style/estiloeditext"
+            android:layout_weight="1" />
+        <!--Campo Apellido -->
         <TextView
             android:id="@+id/lbnApellidos"
-            style="@style/EstiloTexVi"
-            android:text="@string/apellidos" />
-        <!--Campo Apellido -->
-        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="2dp">
+            android:text="@string/apellidos" />
 
-            <EditText
-                android:id="@+id/editApellido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </android.support.v7.widget.CardView>
+        <EditText
+            android:id="@+id/editApellido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/estiloeditext"
+            android:layout_weight="1" />
         <!--Campo Email -->
         <TextView
             android:id="@+id/lbnEmail"
-            style="@style/EstiloTexVi"
-            android:text="@string/email" />
-
-        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card_view:cardCornerRadius="2dp">
+            android:text="@string/email" />
 
-            <EditText
-                android:id="@+id/editEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textEmailAddress" />
-        </android.support.v7.widget.CardView>
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/estiloeditext"
+            android:layout_weight="1" />
         <!--Campo Tipo de Irregularidad -->
         <TextView
             android:id="@+id/lbnNombreTipo"
-            style="@style/EstiloTexVi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/tipo" />
-
 
         <Spinner
             android:id="@+id/spnTipo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></Spinner>
-        <Button
+    </LinearLayout>
+
+
+    <!--Boton Tomar Foto-->
+    <!-- <TextView
+         android:id="@+id/lbnMsjFoto"
+         android:layout_width="357dp"
+         android:layout_height="wrap_content"
+         android:text="@string/msjFoto" />-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:gravity="bottom">
+
+        <!--
+               <Button
+                android:id="@+id/btnTomarFoto"
+                android:text="@string/tomarFoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/botones"
+                   android:hapticFeedbackEnabled="false"
+                   android:drawableBottom="@drawable/ic_camera_alt_black_24dp"
+                   android:includeFontPadding="false"
+                   android:layout_margin="15dp"
+                   android:layout_gravity="center_horizontal" />
+        -->
+
+        <ImageButton
+
             android:id="@+id/btnTomarFoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tomarFoto" />
+            android:src="@drawable/camaraa"
+            style="@style/estiloImageButton" />
+
         <!--Boton Guardar-->
+
         <Button
             android:id="@+id/btnEnviar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/enviar" />
+            android:text="@string/enviar"
+            style="@style/botones" />
     </LinearLayout>
+
+
 </LinearLayout>

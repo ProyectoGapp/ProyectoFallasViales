@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/id_mapas" android:icon="@android:drawable/ic_menu_camera"
+        <item android:id="@+id/id_mapas" android:icon="@drawable/reportar_falla"
             android:title="Reportar Falla" />
-        <item android:id="@+id/id_opciones" android:icon="@android:drawable/ic_menu_gallery"
+        <item android:id="@+id/id_opciones" android:icon="@drawable/mostrar_reporte"
             android:title="Mostrar Reporte" />
        <!-- <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
             android:title="Slideshow" />

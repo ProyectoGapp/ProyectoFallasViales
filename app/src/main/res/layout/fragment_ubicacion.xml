@@ -8,7 +8,7 @@
     <TextView android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Hola este seria el nuevo fragment" />-->
-    
+
     <fragment
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
         android:id="@+id/idbtnenviarformulario"
         android:layout_width="match_parent"
         android:text="Siguiente"
-        android:layout_weight="6"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        style="@style/botones" />
 
 </LinearLayout>
