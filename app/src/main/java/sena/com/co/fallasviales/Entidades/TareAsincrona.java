@@ -2,6 +2,7 @@ package sena.com.co.fallasviales.Entidades;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.view.View;
 
 
 import com.cloudinary.Cloudinary;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import sena.com.co.fallasviales.commons.ConfiguracionGlobal;
 import sena.com.co.fallasviales.commons.Utilidad;
 import sena.com.co.fallasviales.formulario.Auxiliar;
+import sena.com.co.fallasviales.formulario.FormularioActivity;
 
 /**
  * Created by Wilmer Fernandez on 20/02/2016.
@@ -26,8 +28,19 @@ public class TareAsincrona extends AsyncTask {
     static final Logger LOG = Logger.getLogger(TareAsincrona.class
             .getSimpleName());
     private String url;
+    private FormularioActivity activity;
+
+    public TareAsincrona(FormularioActivity activity) {
+        this.activity = activity;
+    }
 
 
+    @Override
+    protected void onPostExecute(Object o) {
+        super.onPostExecute(o);
+        activity.getProgressBar().setVisibility(View.INVISIBLE);
+
+    }
 
     /**
      * @param params
@@ -51,7 +64,6 @@ public class TareAsincrona extends AsyncTask {
         }
         return null;
     }
-
     //gettrs y settrs
     public String getUrl() {
         return url;

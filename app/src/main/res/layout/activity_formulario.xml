@@ -4,26 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
-    tools:context="sena.com.co.fallasviales.formulario.FormularioActivity"
-    android:weightSum="1">
-
+    android:weightSum="1"
+    tools:context="sena.com.co.fallasviales.formulario.FormularioActivity">
     <LinearLayout
         android:layout_width="match_parent"
-
+        android:layout_height="290dp"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:orientation="vertical"
-        android:layout_height="290dp">
+        android:paddingTop="@dimen/activity_vertical_margin">
         <!--Campo Ubicación-->
         <TextView
             android:id="@+id/lbnUbicacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ubicacion" />
-
         <TextView
             android:id="@+id/txtUbicacion"
             android:layout_width="match_parent"
@@ -38,9 +34,9 @@
 
         <EditText
             android:id="@+id/editNombre"
+            style="@style/estiloeditext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/estiloeditext"
             android:layout_weight="1" />
         <!--Campo Apellido -->
         <TextView
@@ -51,9 +47,9 @@
 
         <EditText
             android:id="@+id/editApellido"
+            style="@style/estiloeditext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/estiloeditext"
             android:layout_weight="1" />
         <!--Campo Email -->
         <TextView
@@ -64,9 +60,9 @@
 
         <EditText
             android:id="@+id/editEmail"
+            style="@style/estiloeditext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/estiloeditext"
             android:layout_weight="1" />
         <!--Campo Tipo de Irregularidad -->
         <TextView
@@ -81,48 +77,31 @@
             android:layout_height="wrap_content"></Spinner>
     </LinearLayout>
 
-
-    <!--Boton Tomar Foto-->
-    <!-- <TextView
-         android:id="@+id/lbnMsjFoto"
-         android:layout_width="357dp"
-         android:layout_height="wrap_content"
-         android:text="@string/msjFoto" />-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent"
-        android:weightSum="1"
-        android:gravity="bottom">
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <!--
-               <Button
-                android:id="@+id/btnTomarFoto"
-                android:text="@string/tomarFoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/botones"
-                   android:hapticFeedbackEnabled="false"
-                   android:drawableBottom="@drawable/ic_camera_alt_black_24dp"
-                   android:includeFontPadding="false"
-                   android:layout_margin="15dp"
-                   android:layout_gravity="center_horizontal" />
-        -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
 
         <ImageButton
-
             android:id="@+id/btnTomarFoto"
-            android:src="@drawable/camaraa"
-            style="@style/estiloImageButton" />
-
+            style="@style/estiloImageButton"
+            android:src="@drawable/camaraa" />
         <!--Boton Guardar-->
 
         <Button
             android:id="@+id/btnEnviar"
+            style="@style/botones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/enviar"
-            style="@style/botones" />
+            android:text="@string/enviar" />
     </LinearLayout>
 
 

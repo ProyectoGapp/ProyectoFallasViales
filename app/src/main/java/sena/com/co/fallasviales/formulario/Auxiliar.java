@@ -63,7 +63,6 @@ public class Auxiliar implements View.OnClickListener {
     }
 
 
-
     @Override
     public void onClick(View view) {
         int seleccion = view.getId();
@@ -73,12 +72,7 @@ public class Auxiliar implements View.OnClickListener {
                     datos_activity.setValidar(false);
                     datos_activity.getValidator().validate();
                     if (!datos_activity.isValidar()) {
-                        if (!tareAsincrona.getUrl().isEmpty()) {
-                            guardar();
-                        }else {
-                            String msj="Cargando foto por favor espere";
-                            lanzaMensaje(msj);
-                        }
+                        guardar();
 
                     }
                     break;
@@ -101,7 +95,9 @@ public class Auxiliar implements View.OnClickListener {
     private void crearUsuario(String id) {
         LOG.info("[whilfer]**********Crear Usuario*************");
         Usuario usuario = new Usuario();
-       usuario.setCordenadas("Indefinido aun");
+        if (Utilidad.validaNulos(datos_activity.coordenadas())) {
+            usuario.setCordenadas(datos_activity.coordenadas().toString());
+        }
         usuario.setUbicacion("Popayán");
         usuario.setTipo(getTipo());
         usuario.setIdentificador(id);
@@ -125,7 +121,7 @@ public class Auxiliar implements View.OnClickListener {
      * subirFoto
      */
     public void subirFoto() {
-        tareAsincrona = new TareAsincrona();
+        tareAsincrona = new TareAsincrona(datos_activity);
         tareAsincrona.execute(datos_activity.getBitmap(), getCloudinary());
         setSubirFoto(true);
     }
@@ -146,16 +142,12 @@ public class Auxiliar implements View.OnClickListener {
                 datos_activity.getFirebase().child(ConfiguracionGlobal.USUARIOS).child(id).setValue(getUsuario());
                 lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjResExitoso)));
                 limpiar();
-
-                //actualizarLista(id);
             }
 
         } else {
             FragmentManager fragmentManager = datos_activity.getSupportFragmentManager();
             DialogAlertaFoto dialogAlertaFoto = new DialogAlertaFoto();
             dialogAlertaFoto.show(fragmentManager, "tagAlerta");
-           /* lanzaMensaje(String.valueOf(datos_activity.getApplicationContext().getText(R.string.msjResNoExitoso)));
-            limpiar();*/
         }
     }
 
@@ -200,8 +192,8 @@ public class Auxiliar implements View.OnClickListener {
                     for (Usuario usuario1 : Utilidad.getUsuarios()) {
                         LOG.info("[Usuer**********++" + usuario1.getNombre());
                     }
-                }catch (Exception e){
-                    LOG.info("Usuario nulo"+e.getLocalizedMessage());
+                } catch (Exception e) {
+                    LOG.info("Usuario nulo" + e.getLocalizedMessage());
                 }
 
             }

@@ -102,7 +102,6 @@ public class AuxiliarSugar {
         LOG.info("[whilfer]********** ObtenerUsuariosLocales *************");
         setUsuariosSqlLite(new ArrayList<Usuario>());
         List<Usuario> usuarios = Usuario.listAll(Usuario.class);
-        usuariosSqlLite_recycler = Usuario.listAll(Usuario.class);
         if (!usuarios.isEmpty()) {
             for (Usuario usuario : usuarios) {
                 getUsuariosSqlLite().add(usuario);
@@ -175,37 +174,6 @@ public class AuxiliarSugar {
         return listaSet;
     }
 
-    public void compared() {
-        LOG.info("COMPARED");
-        Collection listFirebase = new ArrayList(getUsuariosFirebase());
-        LOG.info(" list uno " + listFirebase.size());
-        Collection listSql = new ArrayList(getUsuariosSqlLite());
-        LOG.info(" list dos " + listSql.size());
-        convertirListASet(getUsuariosFirebase());
-
-        Collection<Usuario> similar = new HashSet<Usuario>();
-        similar.addAll(listFirebase);
-        Collection<Usuario> different = new HashSet<Usuario>();
-        different.addAll(listFirebase);
-        different.addAll(listSql);
-
-        similar.retainAll(listSql);
-
-        different.removeAll(similar);
-        System.out.printf("One:%s%nTwo:%s%nSimilar:%s%nDifferent:%s%n", listFirebase.size(), listSql.size(), similar.size(), different.size());
-        for (Usuario collection : different) {
-            LOG.info(" DIFERETE " + collection.getNombre());
-
-        }
-
-
-        for (Usuario collection : similar) {
-            LOG.info("SIMILAR" + collection.getNombre());
-
-        }
-
-
-    }
 
     /**
      * comparar listas

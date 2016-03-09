@@ -1,5 +1,7 @@
 package sena.com.co.fallasviales.formulario;
 
+import android.animation.ObjectAnimator;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,12 +13,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,7 +71,7 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
     Map<View, TextView> spinnerSelections;
     String longitud;
     String latitud;
-
+    private ProgressBar progressBar;
 
 
     @Override
@@ -105,10 +109,14 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
         validator = new Validator(this);
         validator.setValidationListener(this);
         spinnerSelections = new HashMap<View, TextView>();
-        Bundle bundle=getIntent().getExtras();
-        longitud=bundle.getString("longitud");
-        latitud=bundle.getString("latitud");
-        LOG.info("longitud latitud "+longitud+" "+latitud);
+        Bundle bundle = getIntent().getExtras();
+        //Progress Bar
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+        progressBar.setProgress(100);
+        longitud = bundle.getString("longitud");
+        latitud = bundle.getString("latitud");
+        LOG.info("longitud latitud " + longitud + " " + latitud);
         tipos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -121,6 +129,21 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
             }
         });
 
+    }
+
+    /**
+     * cooredenas de los mapas
+     *
+     * @return
+     */
+    public StringBuilder coordenadas() {
+        StringBuilder coordenadas = new StringBuilder();
+        if (Utilidad.validaNulos(longitud) && Utilidad.validaNulos(latitud)) {
+            coordenadas.append(longitud);
+            coordenadas.append(",");
+            coordenadas.append(latitud);
+        }
+        return coordenadas;
     }
 
     /**
@@ -170,6 +193,15 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
     }
 
     //gettrrs sertters
+
+    public ProgressBar getProgressBar() {
+        return progressBar;
+    }
+
+    public void setProgressBar(ProgressBar progressBar) {
+        this.progressBar = progressBar;
+    }
+
     public Spinner getTipos() {
         return tipos;
     }
