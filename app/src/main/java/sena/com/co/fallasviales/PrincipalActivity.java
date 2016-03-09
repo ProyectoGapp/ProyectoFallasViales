@@ -1,6 +1,7 @@
 package sena.com.co.fallasviales;
 
 
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,14 +19,12 @@ import android.view.MenuItem;
 import sena.com.co.fallasviales.fragments_mapa.Fragment_ubicacion;
 import sena.com.co.fallasviales.listas.Fragment_listado;
 
-
 public class PrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FragmentManager manager;
     Fragment_ubicacion fragment_ubicacion = new Fragment_ubicacion();
     Fragment_listado fragment_listado = new Fragment_listado();
-
 
 
     @Override
@@ -36,8 +35,6 @@ public class PrincipalActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         manager = getSupportFragmentManager();
-
-
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -96,8 +93,41 @@ public class PrincipalActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.id_mapas) {
+            if (manager.findFragmentByTag("FRAGMENT_UBICACION") == null) {
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.hide(fragment_listado);
+                transaction.add(R.id.framelayout_contenedor, fragment_ubicacion, "FRAGMENT_UBICACION");
+                transaction.commit();
+            } else {
+                FragmentTransaction transaction = manager.beginTransaction();
+                fragment_ubicacion = (Fragment_ubicacion) manager.findFragmentByTag("FRAGMENT_UBICACION");
+                transaction.hide(fragment_listado);
+                transaction.show(fragment_ubicacion);
+                transaction.commit();
+
+            }
+        } else if (id == R.id.id_opciones) {
+            if (manager.findFragmentByTag("FRAGMENT_LISTA") == null) {
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.hide(fragment_ubicacion);
+                transaction.add(R.id.framelayout_contenedor, fragment_listado, "FRAGMENT_LISTA");
+                transaction.commit();
+            } else {
+                FragmentTransaction transaction = manager.beginTransaction();
+                fragment_listado = (Fragment_listado) manager.findFragmentByTag("FRAGMENT_LISTA");
+                transaction.hide(fragment_ubicacion);
+                transaction.show(fragment_listado);
+                transaction.commit();
+            }
+        }
+
+
+
+
+
+
+        /*if (id == R.id.id_mapas) {
            // manager.beginTransaction().add(R.id.framelayout_contenedor, fragment_ubicacion).commit();
             manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_ubicacion).commit();
 
@@ -108,18 +138,17 @@ public class PrincipalActivity extends AppCompatActivity
 
         }
 
-        /*else if (id == R.id.nav_slideshow) {
+    //manager.beginTransaction().add(fragment_lista,"FRAGMENT_LISTA");
 
-        } else if (id == R.id.nav_manage) {
+ //   manager.beginTransaction().replace(R.id.framelayout_contenedor, fragment_lista, "key").commit();
 
-        } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
 
-        }*/
+        //manager.beginTransaction().add(R.id.framelayout_contenedor, fragment_lista).commit();*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
+

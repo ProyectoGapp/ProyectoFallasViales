@@ -1,5 +1,9 @@
 package sena.com.co.fallasviales.commons;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -37,6 +41,16 @@ public class AuxiliarSugar {
     public AuxiliarSugar(Splass_Activity splass_activity) {
         this.splass_activity = splass_activity;
     }
+
+    /*public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) splass_activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (Utilidad.validaNulos(netInfo) && netInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }*/
 
     /**
      * Traer datos de la nube
@@ -89,8 +103,6 @@ public class AuxiliarSugar {
         setUsuariosSqlLite(new ArrayList<Usuario>());
         List<Usuario> usuarios = Usuario.listAll(Usuario.class);
         usuariosSqlLite_recycler = Usuario.listAll(Usuario.class);
-
-
         if (!usuarios.isEmpty()) {
             for (Usuario usuario : usuarios) {
                 getUsuariosSqlLite().add(usuario);
@@ -103,7 +115,6 @@ public class AuxiliarSugar {
     }
 
 
-
     public void borrar() {
         Usuario.deleteAll(Usuario.class);
     }
@@ -111,14 +122,11 @@ public class AuxiliarSugar {
     public void compararListas() {
         //obtener datos de base local
         ObtenerUsuariosLocales();
-        List<Usuario> usuarios = new ArrayList<>();
-        boolean igual = false;
         //usuario temporal
         Usuario usuarioTem;
         LOG.info(">>>>>Comparando listas>>>>>>> ");
-        LOG.info(" lista firebase  " + getUsuariosFirebase().size());
+        LOG.info(" lista firebase " + getUsuariosFirebase().size());
         LOG.info(" lista sqlLite " + getUsuariosSqlLite().size());
-
         if (getUsuariosSqlLite().isEmpty()) {
             LOG.info(" <<<<<<<<<<<<<<< Comparando listas viejos ");
             for (Usuario usuario : getUsuariosFirebase()) {
@@ -126,40 +134,27 @@ public class AuxiliarSugar {
             }
         } else if (!compararListas(getUsuariosFirebase(), getUsuariosSqlLite())) {
             LOG.info(" Comparando listas nuevos ");
-            //compared();
-
             for (Usuario usuarioUno : getUsuariosFirebase()) {
                 LOG.info("lista uno <<<<<<<<<<<<<<<<<<< :" + usuarioUno.getIdentificador());
                 for (Usuario usuarioDos : getUsuariosSqlLite()) {
                     LOG.info("lista Dos <<<<<<<<<<<<<<<<<<< :" + usuarioDos.getIdentificador());
                     if (usuarioUno.getIdentificador().equals(usuarioDos.getIdentificador())) {
-                        igual = true;
-                        usuarioTem = new Usuario();
-                        LOG.info("Usuario if <<<<<<<< :" + usuarioTem.getNombre());
-                    } else {
-                        igual = false;
-                        usuarioTem = (usuarioUno.getIdentificador().equals(usuarioDos.getIdentificador()) ? null : usuarioUno);
-                        if (!usuariosNuevos.contains(usuarioTem)) {
-                            usuariosNuevos.add(usuarioTem);
-                        }
-                        LOG.info("Usuario else <<<<<<<<<<<<<:" + usuarioTem.getNombre());
+                        usuarioUno.setBandera(true);
                     }
                 }
-
             }
-            LOG.info("list  nuevossss <<<<<<<<<<<<<<<<<< :" + usuariosNuevos.size());
-            for (int i=0;i<usuariosNuevos.size();i++) {
-                LOG.info("ndjnd igual"+igual);
-                if (igual){
-                    LOG.info("ndjnd");
-                    usuariosNuevos.remove(i);
+            for (Usuario usuario : getUsuariosFirebase()) {
+                if (!usuario.isBandera()) {
+                    usuariosNuevos.add(usuario);
                 }
-                LOG.info("nuevossss <<<<<<<<<<<<<<<<<< :" + usuariosNuevos.get(i).getIdentificador() + " " + usuariosNuevos.get(i).getNombre());
             }
+            LOG.info("list nuevossss <<<<<<<<<<<<<<<<<< :" + usuariosNuevos.size());
 
-
+            for (Usuario usuario : usuariosNuevos) {
+                Usuario.save(usuario);
+                LOG.info("nuevossss <<<<<<<<<<<<<<<<<< :" + usuario.isBandera() + " " + usuario.getNombre() + usuario.getIdentificador());
+            }
         }
-
         LOG.info("[whilfer]********** comparar *************" + compararListas(getUsuariosFirebase(), getUsuariosSqlLite()));
     }
 

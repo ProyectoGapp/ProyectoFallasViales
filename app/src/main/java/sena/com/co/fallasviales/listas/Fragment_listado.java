@@ -37,7 +37,8 @@ public class Fragment_listado extends Fragment {
         recyclerView = (RecyclerView)vista.findViewById(R.id.id_listas_recycler);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
         recyclerView.setLayoutManager(gridLayoutManager);
-        datosusuario = AuxiliarSugar.usuariosSqlLite_recycler;
+        datosusuario = Usuario.listAll(Usuario.class);;
+        System.out.println("lista"+datosusuario.size());
         AdaptadorLista adaptadorLista = new AdaptadorLista(datosusuario);
         recyclerView.setAdapter(adaptadorLista);
 

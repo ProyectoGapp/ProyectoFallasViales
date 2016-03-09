@@ -73,7 +73,13 @@ public class Auxiliar implements View.OnClickListener {
                     datos_activity.setValidar(false);
                     datos_activity.getValidator().validate();
                     if (!datos_activity.isValidar()) {
-                        guardar();
+                        if (!tareAsincrona.getUrl().isEmpty()) {
+                            guardar();
+                        }else {
+                            String msj="Cargando foto por favor espere";
+                            lanzaMensaje(msj);
+                        }
+
                     }
                     break;
                 case (R.id.btnTomarFoto):

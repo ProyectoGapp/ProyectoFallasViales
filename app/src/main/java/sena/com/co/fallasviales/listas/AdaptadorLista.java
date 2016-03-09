@@ -14,6 +14,7 @@ import java.util.List;
 
 import sena.com.co.fallasviales.Entidades.Usuario;
 import sena.com.co.fallasviales.R;
+import sena.com.co.fallasviales.commons.Utilidad;
 
 /**
  * Created by Mobilelab18 on 5/03/2016.
@@ -55,11 +56,13 @@ public class AdaptadorLista extends  RecyclerView.Adapter<AdaptadorLista.Usuario
     @Override
     public void onBindViewHolder(Usuariosclass holder, int position) {
         String varia = datosusuario.get(position).getNombre().toString();
-
         holder.v_txtnombre.setText(datosusuario.get(position).getNombre().toString());
         holder.v_txtapellido.setText(datosusuario.get(position).getApellidos().toString());
+        String url = datosusuario.get(position).getUrlFoto()!=null?"":datosusuario.get(position).getUrlFoto().toString();
+
         Picasso.with(holder.itemView.getContext()).load(datosusuario.get(position).getUrlFoto().toString()).into(holder.v_imagen);
         holder.v_posicion = position;
+
 
 
     }

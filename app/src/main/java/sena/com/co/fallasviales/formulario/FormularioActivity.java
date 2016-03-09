@@ -62,6 +62,9 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
     private Validator validator;
     private boolean validar;
     Map<View, TextView> spinnerSelections;
+    String longitud;
+    String latitud;
+
 
 
     @Override
@@ -99,6 +102,10 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
         validator = new Validator(this);
         validator.setValidationListener(this);
         spinnerSelections = new HashMap<View, TextView>();
+        Bundle bundle=getIntent().getExtras();
+        longitud=bundle.getString("longitud");
+        latitud=bundle.getString("latitud");
+        LOG.info("longitud latitud "+longitud+" "+latitud);
         tipos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
