@@ -18,7 +18,9 @@ public class ConfiguracionGlobal {
     public static final String URL_BUSCAR_USUARIOS = "https://intense-inferno-2724.firebaseio.com/Usuarios";
     public static final String USUARIOS = "Usuarios";
     public static final String SALTO_DE_LINEA = "/";
-    public static final String SELECCION = "Seleccione";
+    public static final String LONGITUD = "longitud";
+    public static final String LATITUD = "latitud";
+
     //cLOUDINARY
     public static final String CLOUDINARY_NOMBRE = "senawhilfer";
     public static final String CLOUDINARY_CONNECTION_NAME = "cloud_name";

@@ -20,10 +20,8 @@ import sena.com.co.fallasviales.commons.AuxiliarSugar;
  * A simple {@link Fragment} subclass.
  */
 public class Fragment_listado extends Fragment {
-
     RecyclerView recyclerView;
     List<Usuario> datosusuario = new ArrayList<>();
-
 
     public Fragment_listado() {
         // Required empty public constructor
@@ -41,7 +39,6 @@ public class Fragment_listado extends Fragment {
         System.out.println("lista"+datosusuario.size());
         AdaptadorLista adaptadorLista = new AdaptadorLista(datosusuario);
         recyclerView.setAdapter(adaptadorLista);
-
         return vista;
     }
 

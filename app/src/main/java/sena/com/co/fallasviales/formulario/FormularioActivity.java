@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -57,7 +58,7 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
     private EditText nombre, apellidos;
     @Email(messageResId = R.string.msjErrorEmail)
     private EditText correoElectronico;
-    private TextView ubicacion;
+    private EditText ubicacion;
     private Button btnEnviar;
     private ImageButton btnTomarFoto;
     Firebase firebase;
@@ -78,6 +79,14 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
+        final TextInputLayout txtubicacion = (TextInputLayout) findViewById(R.id.txtInUbicacion);
+        txtubicacion.setHint(getResources().getString(R.string.ubicacion));
+        final TextInputLayout username = (TextInputLayout) findViewById(R.id.txtName);
+        username.setHint(getResources().getString(R.string.nombres));
+        final TextInputLayout txtInapellidos = (TextInputLayout) findViewById(R.id.txtApellidos);
+        txtInapellidos.setHint(getResources().getString(R.string.apellidos));
+        final TextInputLayout txtImEmail = (TextInputLayout) findViewById(R.id.txtImEmail);
+        txtImEmail.setHint(getResources().getString(R.string.email));
         //inicializar con el contexto
         auxiliar = new Auxiliar(this);
         Firebase.setAndroidContext(this);
@@ -92,7 +101,9 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
         nombre = (EditText) findViewById(R.id.editNombre);
         apellidos = (EditText) findViewById(R.id.editApellido);
         correoElectronico = (EditText) findViewById(R.id.editEmail);
-        ubicacion = (TextView) findViewById(R.id.txtUbicacion);
+        ubicacion = (EditText) findViewById(R.id.txtUbicacion);
+        ubicacion.setEnabled(false);
+        ubicacion.setFocusable(false);
         tipos = (Spinner) findViewById(R.id.spnTipo);
         //cargar tipos en sppiner
         tiposDanos = new ArrayAdapter<CharSequence>(this, R.layout.support_simple_spinner_dropdown_item);
@@ -114,9 +125,18 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         progressBar.setProgress(100);
-        longitud = bundle.getString("longitud");
-        latitud = bundle.getString("latitud");
-        LOG.info("longitud latitud " + longitud + " " + latitud);
+        //Coordenadas
+        longitud = bundle.getString(ConfiguracionGlobal.LONGITUD);
+        latitud = bundle.getString(ConfiguracionGlobal.LATITUD);
+        //concatenar coordenadas
+        coordenadas();
+        //añaden coordenas al text view
+        if (!coordenadas().toString().isEmpty()){
+            ubicacion.setText(coordenadas().toString());
+        }else {
+            ubicacion.setText( "No se obtuvieron coordenadas  ");
+        }
+
         tipos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -137,6 +157,7 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
      * @return
      */
     public StringBuilder coordenadas() {
+        LOG.info(" *****Cordenadas :longitud" + longitud + ",latitud " + latitud);
         StringBuilder coordenadas = new StringBuilder();
         if (Utilidad.validaNulos(longitud) && Utilidad.validaNulos(latitud)) {
             coordenadas.append(longitud);
@@ -238,7 +259,7 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
         return ubicacion;
     }
 
-    public void setUbicacion(TextView ubicacion) {
+    public void setUbicacion(EditText ubicacion) {
         this.ubicacion = ubicacion;
     }
 

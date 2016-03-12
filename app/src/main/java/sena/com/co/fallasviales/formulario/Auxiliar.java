@@ -51,6 +51,7 @@ public class Auxiliar implements View.OnClickListener {
     private Cloudinary cloudinary;
     private TareAsincrona tareAsincrona;
     private List<Usuario> usuarios;
+    private String corrdenadas;
 
 
     /**
@@ -95,9 +96,7 @@ public class Auxiliar implements View.OnClickListener {
     private void crearUsuario(String id) {
         LOG.info("[whilfer]**********Crear Usuario*************");
         Usuario usuario = new Usuario();
-        if (Utilidad.validaNulos(datos_activity.coordenadas())) {
-            usuario.setCordenadas(datos_activity.coordenadas().toString());
-        }
+        usuario.setCordenadas(getCorrdenadas());
         usuario.setUbicacion("Popayán");
         usuario.setTipo(getTipo());
         usuario.setIdentificador(id);
@@ -135,6 +134,9 @@ public class Auxiliar implements View.OnClickListener {
         setUsuario(new Usuario());
         //tipo de daño
         seleccionarTipo();
+        if (!datos_activity.coordenadas().toString().isEmpty()) {
+            setCorrdenadas(datos_activity.coordenadas().toString());
+        }
         if (isSubirFoto()) {
             if (isHayTipos()) {
                 String id = Utilidad.idUsuario(ConfiguracionGlobal.USER).toString();
@@ -310,6 +312,14 @@ public class Auxiliar implements View.OnClickListener {
 
     public boolean isSubirFoto() {
         return subirFoto;
+    }
+
+    public String getCorrdenadas() {
+        return corrdenadas;
+    }
+
+    public void setCorrdenadas(String corrdenadas) {
+        this.corrdenadas = corrdenadas;
     }
 
     public void setSubirFoto(boolean subirFoto) {

@@ -39,8 +39,6 @@ public class Splass_Activity extends AppCompatActivity {
         firebaseTipos = new Firebase(ConfiguracionGlobal.URL_BUSCAR_USUARIOS);
         auxiliarSugar = new AuxiliarSugar(Splass_Activity.this);
         auxiliarSugar.ejecutarFirebase();
-        //auxiliarSugar.borrar();
-        //this.onRetainNonConfigurationInstance ();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {

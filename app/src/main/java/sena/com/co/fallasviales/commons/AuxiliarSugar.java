@@ -35,6 +35,7 @@ public class AuxiliarSugar {
     private List<Usuario> usuariosSqlLite;
     public static List<Usuario> usuariosSqlLite_recycler;
     private static List<Usuario> usuariosNuevos = new ArrayList<>();
+    private static List<Usuario> usuariosEliminar = new ArrayList<>();
 
     private boolean bandera;
 
@@ -42,7 +43,7 @@ public class AuxiliarSugar {
         this.splass_activity = splass_activity;
     }
 
-    /*public boolean isOnline() {
+    public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) splass_activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -50,7 +51,7 @@ public class AuxiliarSugar {
             return true;
         }
         return false;
-    }*/
+    }
 
     /**
      * Traer datos de la nube
@@ -112,12 +113,9 @@ public class AuxiliarSugar {
         }
 
     }
-
-
-    public void borrar() {
-        Usuario.deleteAll(Usuario.class);
-    }
-
+    /**
+     * compararListas
+     */
     public void compararListas() {
         //obtener datos de base local
         ObtenerUsuariosLocales();
@@ -131,6 +129,11 @@ public class AuxiliarSugar {
             for (Usuario usuario : getUsuariosFirebase()) {
                 guardarSqlLite(usuario);
             }
+        } else if (getUsuariosSqlLite().size() > getUsuariosFirebase().size()) {
+            LOG.info(" Entro a actualizar base local con respecto a firebase");
+            //eleiminar datos que no estan en firebase
+            verificarListas(getUsuariosSqlLite(), getUsuariosFirebase());
+            setUsuariosFirebase(new ArrayList<Usuario>());
         } else if (!compararListas(getUsuariosFirebase(), getUsuariosSqlLite())) {
             LOG.info(" Comparando listas nuevos ");
             for (Usuario usuarioUno : getUsuariosFirebase()) {
@@ -147,14 +150,48 @@ public class AuxiliarSugar {
                     usuariosNuevos.add(usuario);
                 }
             }
-            LOG.info("list nuevossss <<<<<<<<<<<<<<<<<< :" + usuariosNuevos.size());
-
+            setUsuariosFirebase(new ArrayList<Usuario>());
+            LOG.info("list nuevossss <<<<<<<<<<<<<<<<<< :" + usuariosNuevos.size()+"UsuariosFirebase"+getUsuariosFirebase().size());
             for (Usuario usuario : usuariosNuevos) {
+                LOG.info("Usuario nuevo <<<<<<<<<<<<<<<<<< :" + usuario.isBandera() + " " + usuario.getNombre() + usuario.getIdentificador());
+                //se manda a persisttir
                 Usuario.save(usuario);
-                LOG.info("nuevossss <<<<<<<<<<<<<<<<<< :" + usuario.isBandera() + " " + usuario.getNombre() + usuario.getIdentificador());
+            }
+
+        }else{
+            setUsuariosFirebase(new ArrayList<Usuario>());
+        }
+    }
+
+    /**
+     * verifica listas en firrebase
+     *
+     * @param usuariosSqlLite
+     * @param usuariosFirebase
+     */
+    private void verificarListas(List<Usuario> usuariosSqlLite, List<Usuario> usuariosFirebase) {
+        for (Usuario usuarioUno : usuariosSqlLite) {
+            LOG.info("lista sqlLite <<<<<<<<<<<<<<<<<<< :" + usuarioUno.getIdentificador());
+            for (Usuario usuarioDos : usuariosFirebase) {
+                LOG.info("lista firebase <<<<<<<<<<<<<<<<<<< :" + usuarioDos.getIdentificador());
+                if (usuarioUno.getIdentificador().equals(usuarioDos.getIdentificador())) {
+                    usuarioUno.setBandera(true);
+                }
             }
         }
-        LOG.info("[whilfer]********** comparar *************" + compararListas(getUsuariosFirebase(), getUsuariosSqlLite()));
+        for (Usuario usuario : usuariosSqlLite) {
+            if (!usuario.isBandera()) {
+                //se elimina objeto
+                usuariosEliminar.add(usuario);
+            }
+        }
+        LOG.info("list a eliminar  <<<<<<<<<<<<<<<<<< :" + usuariosEliminar.size());
+
+        for (Usuario usuario : usuariosEliminar) {
+            LOG.info("Usuario a eliminar <<<<<<<<<<<<<<<<<< :" + usuario.isBandera() + " " + usuario.getNombre() + usuario.getIdentificador());
+            Usuario.delete(usuario);
+        }
+        setUsuariosFirebase(new ArrayList<Usuario>());
     }
 
     /**

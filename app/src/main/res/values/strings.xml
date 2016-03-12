@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Formulario de Registro</string>
+    <string name="app_name">Fallas Viales</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,7 +13,7 @@
     <string name="nombres">Nombres</string>
     <string name="apellidos">Apellidos</string>
     <string name="tipo">Tipo de Irregularidad</string>
-    <string name="email">Correo Electrónico</string>
+    <string name="email">Correo electrónico</string>
     <string name="enviar">Enviar</string>
     <string name="msjCampos">Campo/s Obligatorios</string>
     <string name="msjErrorEmail">Formato de correo invalido,Ejm example@gmail.com</string>
