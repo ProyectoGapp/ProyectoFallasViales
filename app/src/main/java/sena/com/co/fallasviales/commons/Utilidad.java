@@ -1,6 +1,13 @@
 package sena.com.co.fallasviales.commons;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -18,7 +25,7 @@ import sena.com.co.fallasviales.Entidades.Usuario;
 public class Utilidad {
     static final Logger LOG = Logger.getLogger(Utilidad.class
             .getSimpleName());
-     public static final List<Usuario>usuarios=new ArrayList<>();
+    public static final List<Usuario> usuarios = new ArrayList<>();
 
     /**
      * Metodo generic para validar objetos nulos     *
@@ -35,7 +42,6 @@ public class Utilidad {
     }
 
 
-
     public static boolean cadenaVacia(String cadena) {
         boolean cadenaVacia = true;
         if (cadena == null || cadena.trim().isEmpty()) {
@@ -43,7 +49,77 @@ public class Utilidad {
         }
         return cadenaVacia;
     }
-    public static  StringBuilder url(String id){
+
+    /**
+     * verifica si hay conexion
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (Utilidad.validaNulos(netInfo) && netInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param context
+     * @return
+     */
+    public static boolean hasActiveInternetConnection(Context context) {
+        if (isOnline(context)) {
+            try {
+                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+                urlc.setRequestProperty("User-Agent", "Test");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(3000);
+                urlc.connect();
+                return (urlc.getResponseCode() == 200);
+            } catch (IOException e) {
+                LOG.info("Error checking internet connection" + e);
+            }
+        } else {
+            LOG.info("No network available!");
+        }
+        return false;
+    }
+    /**
+     * @param context
+     * @return
+     */
+    /*public static boolean hasActiveInternetConnection(Context context) {
+        if (isOnline(context)) {
+            try {
+                HttpURLConnection urlc = (HttpURLConnection)
+                        (new URL("http://clients3.google.com/generate_204")
+                                .openConnection());
+                urlc.setRequestProperty("User-Agent", "Android");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(3000);
+                urlc.connect();
+                return (urlc.getResponseCode() == 204 &&
+                        urlc.getContentLength() == 0);
+            } catch (IOException e) {
+                LOG.info("Error checking internet connection" + e);
+            }
+        } else {
+            LOG.info("No network available!");
+        }
+        return false;
+    }*/
+
+    /**
+     * genera id
+     *
+     * @param id
+     * @return
+     */
+    public static StringBuilder url(String id) {
         StringBuilder url = new StringBuilder();
         url.append(ConfiguracionGlobal.URL_BUSCAR_USUARIOS);
         url.append(ConfiguracionGlobal.SALTO_DE_LINEA);
@@ -51,6 +127,7 @@ public class Utilidad {
         url.append(ConfiguracionGlobal.SALTO_DE_LINEA);
         return url;
     }
+
     /**
      * Metodo para validar el campo correo
      *
@@ -102,7 +179,6 @@ public class Utilidad {
             return false;
         }
     }
-
 
 
     public static Logger getLOG() {

@@ -179,35 +179,6 @@ public class Auxiliar implements View.OnClickListener {
         }
     }
 
-    private void actualizarLista(final String id) {
-        Firebase.setAndroidContext(datos_activity);
-        final Firebase firebase = new Firebase(Utilidad.url(id).toString());
-        LOG.info("[lista Actualizada]************" + Utilidad.url(id).toString());
-        firebase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try {
-                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                    LOG.info("[lista Actualizada]**********" + usuario.getNombre());
-                    Utilidad.getUsuarios().add(usuario);
-                    LOG.info("[lista Actualizada]**********" + Utilidad.getUsuarios().size());
-                    for (Usuario usuario1 : Utilidad.getUsuarios()) {
-                        LOG.info("[Usuer**********++" + usuario1.getNombre());
-                    }
-                } catch (Exception e) {
-                    LOG.info("Usuario nulo" + e.getLocalizedMessage());
-                }
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-
-    }
 
     /**
      * cargar tipos de daños

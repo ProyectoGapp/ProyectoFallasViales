@@ -25,5 +25,7 @@
     <string name="campoObligatorio">Campo Obligatorio.</string>
     <string name="msjSeleccionarTexto">Debe Ingresar un texto.</string>
     <string name="msjTipo">Debe seleccionar un tipo de Irregularidad.</string>
+    <string name="msjSplass">Su dispositivo no esta conectado a internet.</string>
+
 
 </resources>

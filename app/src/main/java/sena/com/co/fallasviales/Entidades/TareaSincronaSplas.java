@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.view.View;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -33,6 +34,11 @@ public class TareaSincronaSplas extends AsyncTask {
     private static List<Usuario> usuariosEliminar = new ArrayList<>();
     private boolean bandera;
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        splass_activity.getProgressBar().setVisibility(View.VISIBLE);
+    }
 
     public TareaSincronaSplas(Splass_Activity splass_activity) {
         this.splass_activity=splass_activity;
@@ -41,8 +47,8 @@ public class TareaSincronaSplas extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        splass_activity.onRetainNonConfigurationInstance ();
-        this.cancel(true);
+        splass_activity.getProgressBar().setVisibility(View.INVISIBLE);
+
     }
 
     @Override
@@ -73,19 +79,7 @@ public class TareaSincronaSplas extends AsyncTask {
         return null;
     }
 
-    /**
-     * verifica conexion
-     * @return
-     */
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) splass_activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (Utilidad.validaNulos(netInfo) && netInfo.isConnected()) {
-            return true;
-        }
-        return false;
-    }
+
     /**
      * Guardar en base local
      *

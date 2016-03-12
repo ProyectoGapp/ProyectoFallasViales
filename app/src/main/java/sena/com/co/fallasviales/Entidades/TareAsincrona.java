@@ -34,6 +34,11 @@ public class TareAsincrona extends AsyncTask {
         this.activity = activity;
     }
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        activity.getProgressBar().setVisibility(View.VISIBLE);
+    }
 
     @Override
     protected void onPostExecute(Object o) {
@@ -60,10 +65,11 @@ public class TareAsincrona extends AsyncTask {
             setUrl((String) resultadoDesacarga.get(ConfiguracionGlobal.URL_FOTO));
             LOG.info("[whilfer]****Url********" + resultadoDesacarga.get(ConfiguracionGlobal.URL_FOTO));
         } catch (IOException e) {
-           LOG.info("[Error al cargar foto]"+e.getLocalizedMessage());
+            LOG.info("[Error al cargar foto]" + e.getLocalizedMessage());
         }
         return null;
     }
+
     //gettrs y settrs
     public String getUrl() {
         return url;
