@@ -65,7 +65,6 @@ public class AuxiliarSugar {
                 LOG.info("[whilfer]********** numero usuarios *************" + dataSnapshot.getChildrenCount());
                 if (dataSnapshot.getChildrenCount() > 0) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        String padre = snapshot.getKey().toString();
                         Usuario usuario = snapshot.getValue(Usuario.class);
                         getUsuariosFirebase().add(usuario);
                         LOG.info("[whilfer]********** usuario *************" + usuario.getNombre() + usuario.getApellidos());

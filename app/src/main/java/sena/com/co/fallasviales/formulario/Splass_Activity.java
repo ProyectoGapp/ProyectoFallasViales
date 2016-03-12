@@ -37,14 +37,13 @@ public class Splass_Activity extends AppCompatActivity {
         SugarContext.init(this);
         firebaseTipos.setAndroidContext(this);
         firebaseTipos = new Firebase(ConfiguracionGlobal.URL_BUSCAR_USUARIOS);
-        auxiliarSugar = new AuxiliarSugar(Splass_Activity.this);
-        auxiliarSugar.ejecutarFirebase();
+       /* auxiliarSugar = new AuxiliarSugar(Splass_Activity.this);
+        auxiliarSugar.ejecutarFirebase();*/
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-
-               /* tareAsincrona = new TareaSincronaSplas(Splass_Activity.this);
-                tareAsincrona.execute(firebaseTipos);*/
+                tareAsincrona = new TareaSincronaSplas(Splass_Activity.this);
+                tareAsincrona.execute(firebaseTipos);
                 Intent intent = new Intent(Splass_Activity.this, PrincipalActivity.class);
                 startActivity(intent);
                 finish();
