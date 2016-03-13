@@ -1,16 +1,20 @@
 package sena.com.co.fallasviales.fragments_mapa;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -38,6 +42,8 @@ public class Fragment_mapa_listadetalle extends Fragment implements OnMapReadyCa
     public Fragment_mapa_listadetalle() {
         // Required empty public constructor
     }
+    FragmentManager manager;
+
 
 
 
@@ -51,6 +57,16 @@ public class Fragment_mapa_listadetalle extends Fragment implements OnMapReadyCa
         mapFragment.getMapAsync(this);*/
         SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.idfragment_mapas_lista);
         mapFragment.getMapAsync(this);
+
+        LocationManager locManager = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
+        List<String> listaProviders = locManager.getAllProviders();
+        if(!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        {
+            manager = getFragmentManager();
+            DialogoAlerta dialogo = new DialogoAlerta();
+            dialogo.show(manager,"tagAlerta");
+
+        }
 
 
         return v;
@@ -75,13 +91,12 @@ public class Fragment_mapa_listadetalle extends Fragment implements OnMapReadyCa
                 String lonss = ListaDatosusuario.longitud;*/
 
 
-
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(ListaDatosusuario.latitud), Double.parseDouble(ListaDatosusuario.longitud)), 16));
                 googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(Double.parseDouble(ListaDatosusuario.latitud), Double.parseDouble(ListaDatosusuario.longitud))));
 
-               // googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
+                // googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
                 //googleMap.clear();
-               // googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(Double.parseDouble(ListaDatosusuario.latitud), Double.parseDouble(ListaDatosusuario.longitud))));
+                // googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(Double.parseDouble(ListaDatosusuario.latitud), Double.parseDouble(ListaDatosusuario.longitud))));
 
                /* googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
                 googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(location.getLatitude(), location.getLongitude())));
@@ -95,6 +110,11 @@ public class Fragment_mapa_listadetalle extends Fragment implements OnMapReadyCa
             }
         });
 
+    }
+
+    public void onProviderDisabled(String provider)
+    {
+        Toast.makeText(getContext(),"Gps Desactivado", Toast.LENGTH_SHORT ).show();
     }
 
 

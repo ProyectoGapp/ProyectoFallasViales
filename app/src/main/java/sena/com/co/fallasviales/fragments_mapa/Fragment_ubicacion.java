@@ -2,10 +2,14 @@ package sena.com.co.fallasviales.fragments_mapa;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+
+import android.location.LocationManager;
 import android.os.Bundle;
+
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +43,7 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
 
     Button btnenviarformulario;
     String longitud, latitud;
+    FragmentManager manager;
 
 
     FormularioActivity formularioActivity = new FormularioActivity();
@@ -58,8 +63,8 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
 
-        btnenviarformulario = (Button) v.findViewById(R.id.idbtnenviarformulario);
 
+        btnenviarformulario = (Button) v.findViewById(R.id.idbtnenviarformulario);
         btnenviarformulario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,14 +73,25 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
                 * Se capturan los datos correspondientes (longitud,latitud)
                 * que se envian a la actividad siguiente.
                 * */
-                Intent intent = new Intent(getContext(), FormularioActivity.class);
-                Bundle datosmapa = new Bundle();
+                LocationManager locManager = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
+                List<String> listaProviders = locManager.getAllProviders();
+                if(!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                {
+                    manager = getFragmentManager();
+                    DialogoAlerta dialogo = new DialogoAlerta();
+                    dialogo.show(manager,"tagAlerta");
 
-                datosmapa.putString("longitud", longitud);
-                datosmapa.putString("latitud", latitud);
+                }
+                else {
+                    Intent intent = new Intent(getContext(), FormularioActivity.class);
+                    Bundle datosmapa = new Bundle();
 
-                intent.putExtras(datosmapa);
-                startActivity(intent);
+                    datosmapa.putString("longitud", longitud);
+                    datosmapa.putString("latitud", latitud);
+
+                    intent.putExtras(datosmapa);
+                    startActivity(intent);
+                }
 
             }
         });

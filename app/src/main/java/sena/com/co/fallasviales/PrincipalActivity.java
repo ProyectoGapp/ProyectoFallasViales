@@ -1,6 +1,8 @@
 package sena.com.co.fallasviales;
 
 
+import android.content.Intent;
+import android.location.LocationManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.List;
 
 import sena.com.co.fallasviales.fragments_mapa.Fragment_ubicacion;
 import sena.com.co.fallasviales.listas.Fragment_listado;
@@ -54,6 +59,12 @@ public class PrincipalActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        //Intent intent=new Intent("android.location.GPS_ENABLED_CHANGE");
+        //intent.putExtra("enabled", true);
+        //sendBroadcast(intent);
     }
 
     @Override

@@ -204,14 +204,15 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/camaraa" />
                 <!--Boton Guardar-->
-                <Button
-                    android:id="@+id/btnEnviar"
-                    style="@style/botones"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:text="@string/enviar" />
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <Button
+        android:id="@+id/btnEnviar"
+        style="@style/botones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/enviar" />
 </RelativeLayout>
