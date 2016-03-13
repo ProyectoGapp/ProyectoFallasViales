@@ -3,9 +3,9 @@
     <color name="colorPrimary">#fdce00</color>
     <color name="colorPrimaryDark">#978201</color>
     <color name="colorAccent">#212020</color>
-
+    <color name="colorWhite">#FFFFFFFF</color>
     <color name="negro">#1C1C1B</color>
-    <color name="amarillo">#FDCE00</color>
+    <color name="amarillo">#fdce00</color>
     <color name="gris">#DADCE2</color>
     <color name="negroclaro">#545454</color>
     <color name="rojo">#E21F20</color>

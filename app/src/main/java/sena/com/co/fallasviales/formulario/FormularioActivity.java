@@ -13,6 +13,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
@@ -73,19 +75,23 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
     String longitud;
     String latitud;
     private ProgressBar progressBar;
+    private TextInputLayout txtubicacion;
+    private TextInputLayout username;
+    private TextInputLayout txtInapellidos;
+    private TextInputLayout txtImEmail;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
-        final TextInputLayout txtubicacion = (TextInputLayout) findViewById(R.id.txtInUbicacion);
+        txtubicacion = (TextInputLayout) findViewById(R.id.txtInUbicacion);
         txtubicacion.setHint(getResources().getString(R.string.ubicacion));
-        final TextInputLayout username = (TextInputLayout) findViewById(R.id.txtName);
+        username = (TextInputLayout) findViewById(R.id.txtName);
         username.setHint(getResources().getString(R.string.nombres));
-        final TextInputLayout txtInapellidos = (TextInputLayout) findViewById(R.id.txtApellidos);
+        txtInapellidos = (TextInputLayout) findViewById(R.id.txtApellidos);
         txtInapellidos.setHint(getResources().getString(R.string.apellidos));
-        final TextInputLayout txtImEmail = (TextInputLayout) findViewById(R.id.txtImEmail);
+        txtImEmail = (TextInputLayout) findViewById(R.id.txtImEmail);
         txtImEmail.setHint(getResources().getString(R.string.email));
         //inicializar con el contexto
         auxiliar = new Auxiliar(this);
@@ -131,12 +137,43 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
         //concatenar coordenadas
         coordenadas();
         //añaden coordenas al text view
-        if (!coordenadas().toString().isEmpty()){
+        if (!coordenadas().toString().isEmpty()) {
             ubicacion.setText(coordenadas().toString());
-        }else {
-            ubicacion.setText( "No se obtuvieron coordenadas  ");
+        } else {
+            ubicacion.setText("No se obtuvieron coordenadas  ");
         }
+        nombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                username.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        apellidos.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txtInapellidos.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         tipos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -214,6 +251,39 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
     }
 
     //gettrrs sertters
+
+
+    public TextInputLayout getTxtubicacion() {
+        return txtubicacion;
+    }
+
+    public void setTxtubicacion(TextInputLayout txtubicacion) {
+        this.txtubicacion = txtubicacion;
+    }
+
+    public TextInputLayout getUsername() {
+        return username;
+    }
+
+    public void setUsername(TextInputLayout username) {
+        this.username = username;
+    }
+
+    public TextInputLayout getTxtInapellidos() {
+        return txtInapellidos;
+    }
+
+    public void setTxtInapellidos(TextInputLayout txtInapellidos) {
+        this.txtInapellidos = txtInapellidos;
+    }
+
+    public TextInputLayout getTxtImEmail() {
+        return txtImEmail;
+    }
+
+    public void setTxtImEmail(TextInputLayout txtImEmail) {
+        this.txtImEmail = txtImEmail;
+    }
 
     public ProgressBar getProgressBar() {
         return progressBar;

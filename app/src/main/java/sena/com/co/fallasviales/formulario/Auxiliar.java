@@ -2,6 +2,7 @@ package sena.com.co.fallasviales.formulario;
 
 import android.content.Intent;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,6 +24,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javax.xml.validation.Validator;
 
@@ -73,7 +75,11 @@ public class Auxiliar implements View.OnClickListener {
                     datos_activity.setValidar(false);
                     datos_activity.getValidator().validate();
                     if (!datos_activity.isValidar()) {
-                        guardar();
+                        if (esNombreValido(datos_activity.getNombre().getText().toString(), datos_activity.getUsername()) &&
+                                esNombreValido(datos_activity.getApellidos().getText().toString(), datos_activity.getTxtInapellidos())) {
+                            guardar();
+                        }
+
 
                     }
                     break;
@@ -86,6 +92,24 @@ public class Auxiliar implements View.OnClickListener {
             LOG.info("[whilfer]>>>>>>>>>>>>Error al seleccionar " + e.getLocalizedMessage());
         }
 
+    }
+
+    /**
+     * nombre invalido
+     *
+     * @param nombre
+     * @return
+     */
+    private boolean esNombreValido(String nombre, TextInputLayout inputLayout) {
+        Pattern patron = Pattern.compile("^[a-zA-Z ]+$");
+        if (!patron.matcher(nombre).matches() || nombre.length() > 30) {
+            inputLayout.setError(datos_activity.getApplicationContext().getText(R.string.nombreInvalido));
+            return false;
+        } else {
+            datos_activity.getUsername().setError(null);
+        }
+
+        return true;
     }
 
     /**

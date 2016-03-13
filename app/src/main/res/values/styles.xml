@@ -1,50 +1,47 @@
 <resources>
-
+    <style name="Error" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="Hint" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">#978201</item>
+    </style>
+    <style name="Counter" parent="TextAppearance.Design.Counter">
+        <item name="android:textColor">#42A5F5</item>
+    </style>
+    <style name="CounterOverFlow" parent="TextAppearance.Design.Counter.Overflow">
+        <item name="android:textColor">#FF7043</item>
+    </style>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
         <!--Estilo de texto de la aplicacion-->
         <item name="android:textColor">@color/negroclaro</item>
         <item name="android:colorForeground">@color/foreground_material_light</item>
-
-
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-<!--
-    <style name="EstiloTexVi" parent="@android:style/TextAppearance.Medium">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#171817</item>
-        <item name="android:typeface">sans</item>
-    </style>
--->
-
     <!--Estilo de botones -->
-    <style name="botones"  >
-
+    <style name="botones">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">4dp</item>
         <item name="android:background">@color/amarillo</item>
         <item name="android:textColor">@color/negro</item>
-
     </style>
 
     <!--Estilo EditText -->
     <style name="estiloeditext">
         <item name="android:background">@color/gris</item>
         <item name="android:textColor">@color/negro</item>
-
     </style>
 
     <!--Estilo ImageButton -->
@@ -54,12 +51,8 @@
         <item name="android:layout_height">65dp</item>
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:scaleType">fitCenter</item>
-        <item name="android:background">#fafafa</item>
-
-
-
+        <item name="android:background">#ecedf1</item>
     </style>
-
 
 
 </resources>
