@@ -24,8 +24,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import sena.com.co.fallasviales.R;
 import sena.com.co.fallasviales.formulario.FormularioActivity;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +39,7 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
 
     Button btnenviarformulario;
     String longitud, latitud;
+
 
     FormularioActivity formularioActivity = new FormularioActivity();
 
@@ -99,6 +104,7 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
             public void onMyLocationChange(Location location) {
 
 
+
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
                 googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(location.getLatitude(), location.getLongitude())));
                 longitud = " " + location.getLongitude();
@@ -110,6 +116,19 @@ public class Fragment_ubicacion extends Fragment implements OnMapReadyCallback {
 
                 longitud = " " + location.getLongitude();
                 latitud = " " + location.getLatitude();
+
+
+               /* googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
+                googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(location.getLatitude(), location.getLongitude())));
+                longitud = " " + location.getLongitude();
+                latitud = " " + location.getLatitude();
+
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
+                googleMap.clear();
+                googleMap.addMarker(new MarkerOptions().title("Fallas Viales").position(new LatLng(location.getLatitude(), location.getLongitude())));
+
+                longitud = " " + location.getLongitude();
+                latitud = " " + location.getLatitude();*/
 
 
             }

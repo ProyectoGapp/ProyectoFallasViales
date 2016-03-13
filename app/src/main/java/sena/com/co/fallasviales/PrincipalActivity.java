@@ -35,16 +35,16 @@ public class PrincipalActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_listado).commit();
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -81,9 +81,9 @@ public class PrincipalActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -93,7 +93,28 @@ public class PrincipalActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
         if (id == R.id.id_mapas) {
+           // manager.beginTransaction().add(R.id.framelayout_contenedor, fragment_ubicacion).commit();
+            manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_ubicacion).commit();
+
+            // Handle the camera action
+        } else if (id == R.id.id_opciones) {
+
+            manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_listado).commit();
+
+        }
+
+    //manager.beginTransaction().add(fragment_lista,"FRAGMENT_LISTA");
+
+ //   manager.beginTransaction().replace(R.id.framelayout_contenedor, fragment_lista, "key").commit();
+
+
+
+        //manager.beginTransaction().add(R.id.framelayout_contenedor, fragment_lista).commit();*/
+
+
+       /* if (id == R.id.id_mapas) {
             if (manager.findFragmentByTag("FRAGMENT_UBICACION") == null) {
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.hide(fragment_listado);
@@ -120,31 +141,14 @@ public class PrincipalActivity extends AppCompatActivity
                 transaction.show(fragment_listado);
                 transaction.commit();
             }
-        }
+        }*/
 
 
 
 
 
 
-        /*if (id == R.id.id_mapas) {
-           // manager.beginTransaction().add(R.id.framelayout_contenedor, fragment_ubicacion).commit();
-            manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_ubicacion).commit();
 
-            // Handle the camera action
-        } else if (id == R.id.id_opciones) {
-
-            manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_listado).commit();
-
-        }
-
-    //manager.beginTransaction().add(fragment_lista,"FRAGMENT_LISTA");
-
- //   manager.beginTransaction().replace(R.id.framelayout_contenedor, fragment_lista, "key").commit();
-
-
-
-        //manager.beginTransaction().add(R.id.framelayout_contenedor, fragment_lista).commit();*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
