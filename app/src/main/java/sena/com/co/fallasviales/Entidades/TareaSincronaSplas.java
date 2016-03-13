@@ -127,6 +127,7 @@ public class TareaSincronaSplas extends AsyncTask {
             LOG.info(" Entro a actualizar base local con respecto a firebase");
             //eleiminar datos que no estan en firebase
             verificarListas(getUsuariosSqlLite(), getUsuariosFirebase());
+            //Inicializa lista firebase
             setUsuariosFirebase(new ArrayList<Usuario>());
         } else if (!compararListas(getUsuariosFirebase(), getUsuariosSqlLite())) {
             LOG.info(" Comparando listas nuevos ");
