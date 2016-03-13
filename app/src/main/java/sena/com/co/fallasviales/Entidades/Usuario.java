@@ -44,17 +44,4 @@ public class Usuario extends Irregularidad {
     public void setBandera(boolean bandera) {
         this.bandera = bandera;
     }
-    /*@Override
-    public boolean equals(Object o) {
-        if (o instanceof Usuario) {
-            Usuario usuario = (Usuario) o;
-            if (super.equals(o) && this.getIdentificador().equals(usuario.getIdentificador()))
-                return true;
-            else {
-                return false;
-            }
-        }else {
-            return false;
-        }
-    }*/
 }

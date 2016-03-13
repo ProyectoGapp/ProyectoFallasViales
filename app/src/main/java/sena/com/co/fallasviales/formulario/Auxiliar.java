@@ -103,7 +103,7 @@ public class Auxiliar implements View.OnClickListener {
     private boolean esNombreValido(String nombre, TextInputLayout inputLayout) {
         Pattern patron = Pattern.compile("^[a-zA-Z ]+$");
         if (!patron.matcher(nombre).matches() || nombre.length() > 30) {
-            inputLayout.setError("Nombre inválido");
+            inputLayout.setError(datos_activity.getApplicationContext().getText(R.string.nombreInvalido));
             return false;
         } else {
             datos_activity.getUsername().setError(null);
