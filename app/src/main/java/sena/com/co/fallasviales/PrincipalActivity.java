@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import sena.com.co.fallasviales.formulario.FragmentQuienesSomos;
 import sena.com.co.fallasviales.fragments_mapa.Fragment_ubicacion;
 import sena.com.co.fallasviales.listas.Fragment_listado;
 
@@ -30,6 +31,7 @@ public class PrincipalActivity extends AppCompatActivity
     FragmentManager manager;
     Fragment_ubicacion fragment_ubicacion = new Fragment_ubicacion();
     Fragment_listado fragment_listado = new Fragment_listado();
+    FragmentQuienesSomos quienesSomosFragment=new FragmentQuienesSomos();
 
 
     @Override
@@ -114,6 +116,8 @@ public class PrincipalActivity extends AppCompatActivity
 
             manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_listado).commit();
 
+        }else if (id == R.id.quieneSomos) {
+            manager.beginTransaction().replace(R.id.framelayout_contenedor,quienesSomosFragment).commit();
         }
 
     //manager.beginTransaction().add(fragment_lista,"FRAGMENT_LISTA");

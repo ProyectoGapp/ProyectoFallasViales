@@ -27,7 +27,10 @@
     <string name="msjTipo">Debe seleccionar un tipo de Irregularidad.</string>
     <string name="msjSplass">Su dispositivo no esta conectado a internet.</string>
     <string name="nombreInvalido">Nombre inválido</string>
-
+    <string name="quienesSomos">Quienes somos</string>
+    <string name="msjQuienesSomos">La app Fallas Viales es la apuesta personal de un grupo  programadores  que trabajan de forma integral y que mediante procesos sinérgicos buscan lograr resultados sobresalientes.
+Somos especialistas en el desarrollo de aplicaciones móviles para las plataforma de Android. Construimos aplicaciones en el lenguaje nativo  ya que consideramos que es la mejor manera de que estas aplicaciones aprovechen el 100% de las capacidades de los dispositivos.
+   </string>
 
 
 </resources>
