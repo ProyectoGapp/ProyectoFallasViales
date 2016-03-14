@@ -45,7 +45,7 @@ public class TareAsincrona extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
         activity.getProgressBar().setVisibility(View.INVISIBLE);
-        activity.getBtnEnviar().setClickable(false);
+        activity.getBtnEnviar().setClickable(true);
 
     }
 
