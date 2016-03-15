@@ -6,21 +6,18 @@
             android:title="Reportar Falla" />
         <item android:id="@+id/id_opciones" android:icon="@drawable/mostrar_reporte"
             android:title="Mostrar Reporte" />
-        <item android:id="@+id/quieneSomos" android:icon="@android:drawable/ic_dialog_info"
-            android:title="Quienes somos" />
+
        <!-- <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
             android:title="Slideshow" />
         <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
             android:title="Tools" />-->
     </group>
 
-   <!-- <item android:title="Communicate">
+    <item android:title="Acerca de ">
         <menu>
-            <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
-                android:title="Share" />
-            <item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"
-                android:title="Send" />
+            <item android:id="@+id/quieneSomos" android:icon="@android:drawable/ic_dialog_info"
+                android:title="Quienes somos" />
         </menu>
-    </item>-->
+    </item>
 
 </menu>

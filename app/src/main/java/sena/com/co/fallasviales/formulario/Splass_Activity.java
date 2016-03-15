@@ -45,20 +45,37 @@ public class Splass_Activity extends AppCompatActivity {
         SugarContext.init(this);
         firebaseTipos.setAndroidContext(this);
         firebaseTipos = new Firebase(ConfiguracionGlobal.URL_BUSCAR_USUARIOS);
-      /*  if (android.os.Build.VERSION.SDK_INT > 9) {
+        if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-        }*/
-        if (Utilidad.isOnline(this)) {
-            tareAsincrona = new TareaSincronaSplas(Splass_Activity.this);
-            tareAsincrona.execute(firebaseTipos);
-            Intent intent = new Intent(Splass_Activity.this, PrincipalActivity.class);
-            startActivity(intent);
-            finish();
+        }
+
+        if (Utilidad.isOnline(this)&& Utilidad.isInternetAvailable()) {
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    tareAsincrona = new TareaSincronaSplas(Splass_Activity.this);
+                    tareAsincrona.execute(firebaseTipos);
+                    Intent intent = new Intent(Splass_Activity.this, PrincipalActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            };
+            Timer timer = new Timer();
+            timer.schedule(task, 5000);
         } else {
             FragmentManager fragmentManager = getSupportFragmentManager();
             DialogoIncioSession dialogo = new DialogoIncioSession();
             dialogo.show(fragmentManager, "tagAlerta");
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            };
+            Timer timer = new Timer();
+            timer.schedule(task, 3000);
+
             LOG.info(" Splass no hay conexion a internet ");
         }
 

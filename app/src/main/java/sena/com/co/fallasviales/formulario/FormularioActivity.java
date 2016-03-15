@@ -229,13 +229,18 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (Utilidad.validaNulos(data.getExtras())) {
-            bitmap = (Bitmap) data.getExtras().get(ConfiguracionGlobal.DATA);
-            if (Utilidad.validaNulos(bitmap)) {
-                //subir foto al cloudinary
-                getAuxiliar().subirFoto();
+        try {
+            if (Utilidad.validaNulos(data) && Utilidad.validaNulos(data.getExtras())) {
+                bitmap = (Bitmap) data.getExtras().get(ConfiguracionGlobal.DATA);
+                if (Utilidad.validaNulos(bitmap)) {
+                    //subir foto al cloudinary
+                    getAuxiliar().subirFoto();
+                }
             }
+        } catch (Exception e) {
+            LOG.info("Error Camara"+e.getLocalizedMessage());
         }
+
     }
 
     @Override
