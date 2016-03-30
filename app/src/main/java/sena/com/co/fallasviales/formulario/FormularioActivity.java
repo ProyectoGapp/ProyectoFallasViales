@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
@@ -185,7 +186,21 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
 
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                System.out.println("estas dando aqui");
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**
@@ -214,13 +229,18 @@ public class FormularioActivity extends AppCompatActivity implements Validator.V
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (Utilidad.validaNulos(data.getExtras())) {
-            bitmap = (Bitmap) data.getExtras().get(ConfiguracionGlobal.DATA);
-            if (Utilidad.validaNulos(bitmap)) {
-                //subir foto al cloudinary
-                getAuxiliar().subirFoto();
+        try {
+            if (Utilidad.validaNulos(data) && Utilidad.validaNulos(data.getExtras())) {
+                bitmap = (Bitmap) data.getExtras().get(ConfiguracionGlobal.DATA);
+                if (Utilidad.validaNulos(bitmap)) {
+                    //subir foto al cloudinary
+                    getAuxiliar().subirFoto();
+                }
             }
+        } catch (Exception e) {
+            LOG.info("Error Camara"+e.getLocalizedMessage());
         }
+
     }
 
     @Override

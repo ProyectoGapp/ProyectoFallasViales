@@ -38,12 +38,14 @@ public class TareAsincrona extends AsyncTask {
     protected void onPreExecute() {
         super.onPreExecute();
         activity.getProgressBar().setVisibility(View.VISIBLE);
+        activity.getBtnEnviar().setClickable(false);
     }
 
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
         activity.getProgressBar().setVisibility(View.INVISIBLE);
+        activity.getBtnEnviar().setClickable(true);
 
     }
 

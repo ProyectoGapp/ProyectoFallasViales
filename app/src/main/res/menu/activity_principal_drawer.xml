@@ -13,6 +13,7 @@
             android:title="Tools" />-->
     </group>
 
+<<<<<<< HEAD
     <item android:title="Acerca de la Aplicacion">
         <menu>
 
@@ -22,6 +23,12 @@
                 <!--android:title="Share" />-->
             <!--<item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"-->
                 <!--android:title="Send" />-->
+=======
+    <item android:title="Acerca de ">
+        <menu>
+            <item android:id="@+id/quieneSomos" android:icon="@android:drawable/ic_dialog_info"
+                android:title="Quienes somos" />
+>>>>>>> 2cd1cc1e31ddd3bce23243cd0888ebc87f7a909e
         </menu>
     </item>
 

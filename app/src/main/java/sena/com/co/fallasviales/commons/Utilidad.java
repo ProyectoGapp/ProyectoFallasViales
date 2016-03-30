@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -145,6 +146,22 @@ public class Utilidad {
         return false;
     }
 
+    public static boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("google.com"); //You can replace it with your name
+
+            if (ipAddr.equals("")) {
+                return false;
+            } else {
+                return true;
+            }
+
+        } catch (Exception e) {
+            LOG.info("Error"+e.getLocalizedMessage());
+            return false;
+        }
+
+    }
     /**
      * id usuario
      *
