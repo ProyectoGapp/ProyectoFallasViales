@@ -23,6 +23,7 @@ import java.util.List;
 
 import sena.com.co.fallasviales.formulario.FragmentQuienesSomos;
 import sena.com.co.fallasviales.fragments_mapa.Fragment_ubicacion;
+import sena.com.co.fallasviales.listas.Fragment_Preguntas_Frecuentes;
 import sena.com.co.fallasviales.listas.Fragment_listado;
 
 public class PrincipalActivity extends AppCompatActivity
@@ -32,6 +33,8 @@ public class PrincipalActivity extends AppCompatActivity
     Fragment_ubicacion fragment_ubicacion = new Fragment_ubicacion();
     Fragment_listado fragment_listado = new Fragment_listado();
     FragmentQuienesSomos quienesSomosFragment=new FragmentQuienesSomos();
+    Fragment_Preguntas_Frecuentes fragment_preguntas_frecuentes = new Fragment_Preguntas_Frecuentes();
+
 
 
     @Override
@@ -108,7 +111,7 @@ public class PrincipalActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.id_mapas) {
-           // manager.beginTransaction().add(R.id.framelayout_contenedor, fragment_ubicacion).commit();
+            // manager.beginTransaction().add(R.id.framelayout_contenedor, fragment_ubicacion).commit();
             manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_ubicacion).commit();
 
             // Handle the camera action
@@ -119,10 +122,13 @@ public class PrincipalActivity extends AppCompatActivity
         }else if (id == R.id.quieneSomos) {
             manager.beginTransaction().replace(R.id.framelayout_contenedor,quienesSomosFragment).commit();
         }
+        else if (id == R.id.preguntasfrecuentes)
+        {
+            manager.beginTransaction().replace(R.id.framelayout_contenedor,fragment_preguntas_frecuentes).commit();
+        }
+        //manager.beginTransaction().add(fragment_lista,"FRAGMENT_LISTA");
 
-    //manager.beginTransaction().add(fragment_lista,"FRAGMENT_LISTA");
-
- //   manager.beginTransaction().replace(R.id.framelayout_contenedor, fragment_lista, "key").commit();
+        //   manager.beginTransaction().replace(R.id.framelayout_contenedor, fragment_lista, "key").commit();
 
 
 
@@ -141,7 +147,6 @@ public class PrincipalActivity extends AppCompatActivity
                 transaction.hide(fragment_listado);
                 transaction.show(fragment_ubicacion);
                 transaction.commit();
-
             }
         } else if (id == R.id.id_opciones) {
             if (manager.findFragmentByTag("FRAGMENT_LISTA") == null) {
@@ -170,4 +175,3 @@ public class PrincipalActivity extends AppCompatActivity
         return true;
     }
 }
-

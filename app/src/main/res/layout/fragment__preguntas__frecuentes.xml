@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sena.com.co.fallasviales.listas.Fragment_Preguntas_Frecuentes">
+
+    <Button android:id="@+id/pregunta1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="¿Qué tipo de tipo de anomalías se pueden reportar?"
+        android:textColor="#FFFFFFFF" />
+
+    <LinearLayout android:id="@+id/panelProfile"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#FFFFFFFF">
+
+        <LinearLayout android:id="@+id/panelProfile1"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFFFFFFF">
+
+            <TextView android:id="@+id/strName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Solo se podrá reportar anomalías relacionadas con la infraestructura vial de la ciudad de Popayán, ejemplo: hueco, semáforos dañados y postes en mal estado." />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <Button android:id="@+id/btnpregunta2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="¿Se puede reportar anomalías fuera de la ciudad?"
+        android:textColor="#FFFFFFFF" />
+
+    <LinearLayout android:id="@+id/panelSettings"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#FFFFFFFF">
+        <LinearLayout android:id="@+id/panelSettings1"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFFFFFFF">
+
+            <TextView android:id="@+id/strMail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Solo se podrá reportar anomalías, que pertenezcan  exclusivamente al municipio de Popayán." />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <Button android:id="@+id/btnpregunta3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="¿Para qué sirve la aplicación?"
+        android:textColor="#FFFFFFFF" />
+
+    <LinearLayout android:id="@+id/panel3"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#FFFFFFFF">
+        <LinearLayout android:id="@+id/panel3uno"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFFFFFFF">
+
+            <TextView android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="La aplicación Fallas viales ayuda al ciudadano a denunciar anomalías en la infraestructura vial, para que estas sean atendidas por un ente encargado, en este caso la alcaldía de Popayán." />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
