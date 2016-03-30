@@ -23,6 +23,8 @@ public class Fragment_Preguntas_Frecuentes extends Fragment {
 
 
 
+    View vr = null;
+
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -36,28 +38,34 @@ public class Fragment_Preguntas_Frecuentes extends Fragment {
 
 
         View panelProfile =vi.findViewById(R.id.panelProfile);
-        panelProfile.setVisibility(vi.GONE);
+        panelProfile.setVisibility(View.GONE);
 
         View panelSettings =vi.findViewById(R.id.panelSettings);
-        panelSettings.setVisibility(vi.GONE);
+        panelSettings.setVisibility(View.GONE);
 
         View paneltres =vi.findViewById(R.id.panel3);
-        paneltres.setVisibility(vi.GONE);
+        paneltres.setVisibility(View.GONE);
+
+        vr = vi;
 
         btnpregunta1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                View vi = inflater.inflate(R.layout.fragment__preguntas__frecuentes, container);
+                //View vi = inflater.inflate(R.layout.fragment__preguntas__frecuentes, container);
 
-                View panelProfile = vi.findViewById(R.id.panelProfile);
+                View panelProfile = vr.findViewById(R.id.panelProfile);
                 panelProfile.setVisibility(View.VISIBLE);
 
-                View panelSettings = vi.findViewById(R.id.panelSettings);
+                View panelSettings = vr.findViewById(R.id.panelSettings);
                 panelSettings.setVisibility(View.GONE);
 
-                View panelPrivacy = vi.findViewById(R.id.panel3);
+                View panelPrivacy = vr.findViewById(R.id.panel3);
                 panelPrivacy.setVisibility(View.GONE);
+
+                //vr = vi;
+
+
 
 
             }
@@ -67,22 +75,20 @@ public class Fragment_Preguntas_Frecuentes extends Fragment {
             @Override
             public void onClick(View v) {
 
-                View vi= inflater.inflate(R.layout.fragment__preguntas__frecuentes,container);
+                //View vi= inflater.inflate(R.layout.fragment__preguntas__frecuentes,container);
 
-                View panelProfile =vi.findViewById(R.id.panelProfile);
+                View panelProfile =vr.findViewById(R.id.panelProfile);
                 panelProfile.setVisibility(View.GONE);
 
-                View panelSettings =vi.findViewById(R.id.panelSettings);
+                View panelSettings =vr.findViewById(R.id.panelSettings);
                 panelSettings.setVisibility(View.VISIBLE);
 
-                View panelPrivacy = vi.findViewById(R.id.panel3);
+                View panelPrivacy = vr.findViewById(R.id.panel3);
                 panelPrivacy.setVisibility(View.GONE);
 
-//                View panelProfile =v.findViewById(R.id.panelProfile);
-//                panelProfile.setVisibility(View.GONE);
-//
-//                View panelSettings =v.findViewById(R.id.panelSettings);
-//                panelSettings.setVisibility(View.VISIBLE);
+               // vr = vi;
+
+
 
             }
         });
@@ -91,20 +97,21 @@ public class Fragment_Preguntas_Frecuentes extends Fragment {
         btnpregunta3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View vi= inflater.inflate(R.layout.fragment__preguntas__frecuentes,container);
+               // View vi= inflater.inflate(R.layout.fragment__preguntas__frecuentes,container);
 
-                View panelProfile =vi.findViewById(R.id.panelProfile);
+                View panelProfile =vr.findViewById(R.id.panelProfile);
                 panelProfile.setVisibility(View.GONE);
 
-                View panelSettings = vi.findViewById(R.id.panelSettings);
+                View panelSettings = vr.findViewById(R.id.panelSettings);
                 panelSettings.setVisibility(View.GONE);
 
-                View panelPrivacy = vi.findViewById(R.id.panel3);
+                View panelPrivacy = vr.findViewById(R.id.panel3);
                 panelPrivacy.setVisibility(View.VISIBLE);
+                //vr = vi;
             }
         });
 
-        return vi;
+        return vr;
     }
 
 
