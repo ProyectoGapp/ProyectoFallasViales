@@ -26,6 +26,7 @@
 
             <TextView android:id="@+id/strName"
                 android:layout_width="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
                 style="@style/msjQuienes"
                 android:layout_height="wrap_content"
                 android:text="Solo se podrá reportar anomalías relacionadas con la infraestructura vial de la ciudad de Popayán, ejemplo: hueco, semáforos dañados y postes en mal estado." />
@@ -57,6 +58,7 @@
             <TextView android:id="@+id/strMail"
                 android:layout_width="wrap_content"
                 style="@style/msjQuienes"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_height="wrap_content"
                 android:text="Solo se podrá reportar anomalías, que pertenezcan  exclusivamente al municipio de Popayán." />
 
@@ -88,6 +90,7 @@
             <TextView android:id="@+id/text3"
                 android:layout_width="wrap_content"
                 style="@style/msjQuienes"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_height="wrap_content"
                 android:text="La aplicación Fallas viales ayuda al ciudadano a denunciar anomalías en la infraestructura vial, para que estas sean atendidas por un ente encargado, en este caso la alcaldía de Popayán." />
 
